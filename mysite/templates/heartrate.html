@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}심박수 계산기{% endblock %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="{% static 'css/heartrate.css' %}">
+{% endblock %}
+
+{% block content %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+    <div class="container py-5">
+<h1 class="text-center mb-4">심박수 계산기</h1>
+<div class="row">
+<div class="col-md-6">
+    <form id="heartrate-form">
+        <div class="mb-3">
+            <label for="age" class="form-label">나이</label>
+            <input type="number" class="form-control" id="age" required>
+        </div>
+        <div class="mb-3">
+            <label for="gender" class="form-label">성별</label>
+            <select class="form-select" id="gender" required>
+                <option value="">선택하세요</option>
+                <option value="male">남성</option>
+                <option value="female">여성</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="restingHeartRate" class="form-label">안정시 심박수</label>
+            <input type="number" class="form-control" id="restingHeartRate" required>
+        </div>
+        <button type="submit" class="btn btn-primary">계산하기</button>
+    </form>
+    <div id="result" class="mt-4"></div>
+</div>
+<div class="col-md-6">
+    <div class="exercise-intensity">
+        <h3>운동 강도 설명</h3>
+        <p>본 측정법은 카보넨 공식을 따릅니다.</p>
+        <p>또한 남성과 여성을 구분해서 여성은 [226 - 나이]의 공식을 적용했으니 참고 바랍니다.</p>
+        <ul>
+            <li>가벼운 강도 (최대 심박수 기준 50-60%): 워밍업 또는 회복 운동에 적합합니다.</li>
+            <li>보통 강도 (최대 심박수 기준 60-70%): 지구력과 지방 연소를 향상시키는 데 도움이 됩니다.</li>
+            <li>상당한 강도 (최대 심박수 기준 70-80%): 심혈관 건강을 개선하고 지구력을 높이는 데 이상적입니다.</li>
+            <li>고강도 (최대 심박수 기준 80-90%): 운동 능력과 최대 운동 성능을 향상시키는 데 도움이 됩니다.</li>
+            <li>매우 고강도 (최대 심박수 기준 90-100%): 고급 운동 선수들이 사용하는 강도로, 짧은 기간 동안 최대 성능을 발휘하는 데 사용됩니다.</li>
+        </ul>
+    </div>
+</div>
+</div>
+</div>
+</main>
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+<script src="static/JS/heartrate.js"></script>
+{% endblock %}

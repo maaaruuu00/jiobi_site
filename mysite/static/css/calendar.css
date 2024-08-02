@@ -1,0 +1,104 @@
+body {
+    font-family: 'Dovemayo_gothic', sans-serif;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100; /* 네비게이션 바가 콘텐츠 위에 표시되도록 함 */
+    padding: 5px 0 0; /* 상단 공간 확보 */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0; /* 뷰포트 상단에 고정 */
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* 필요시 내부 스크롤 활성화 */
+}
+
+.nav-link {
+    color: #333;
+}
+
+.nav-link.active {
+    color: #007bff;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+#year-calendar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3열 그리드 */
+    gap: 20px; /* 그리드 사이의 간격 */
+}
+
+.month-calendar {
+    border: 1px solid #ddd; /* 달력 테두리 */
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.month-header {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 한 주를 7개 칸으로 나눔 */
+    gap: 5px;
+}
+
+.days-grid div {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.day-of-week {
+    text-align: center;
+    font-weight: bold;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* 공휴일 */
+.holiday {
+    color: red;
+    font-weight: bold;
+}
+
+/* 기념일 */
+.memorial-day {
+    color: blue;
+    font-weight: bold;
+}
+
+/* 주말 */
+.weekend {
+    color: red;
+    font-weight: bold;
+}
+
+/* 주말에 마우스를 올렸을 때 스타일 */
+.weekend:hover {
+    pointer-events: none; /* 이 부분을 추가하여 주말에는 툴팁을 표시하지 않음 */
+}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}계산기{% endblock %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/calculator.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- 계산기 콘텐츠 시작 -->
+<div class="calculator">
+    <div class="output">
+        <input type="text" id="output-screen" readonly>
+    </div>
+    <div class="buttons">
+        <button class="button" onclick="clearOutput()">C</button>
+        <button class="button" onclick="appendToOutput('7')">7</button>
+        <button class="button" onclick="appendToOutput('8')">8</button>
+        <button class="button" onclick="appendToOutput('9')">9</button>
+        <button class="button" onclick="appendToOutput('+')">+</button>
+        <button class="button" onclick="appendToOutput('4')">4</button>
+        <button class="button" onclick="appendToOutput('5')">5</button>
+        <button class="button" onclick="appendToOutput('6')">6</button>
+        <button class="button" onclick="appendToOutput('-')">-</button>
+        <button class="button" onclick="appendToOutput('1')">1</button>
+        <button class="button" onclick="appendToOutput('2')">2</button>
+        <button class="button" onclick="appendToOutput('3')">3</button>
+        <button class="button" onclick="appendToOutput('*')">*</button>
+        <button class="button" onclick="appendToOutput('0')">0</button>
+        <button class="button" onclick="appendToOutput('.')">.</button>
+        <button class="button" onclick="calculate()">=</button>
+        <button class="button" onclick="appendToOutput('/')">/</button>
+    </div>
+    <div class="advanced-buttons">
+        <!--<button class="advanced-button" onclick="toggleAdvancedMode()">공학용</button>-->
+        <button class="advanced-button" id="historyButton">기록</button>
+    </div>
+</div>
+<!-- 계산기 콘텐츠 끝 -->
+
+<!-- 모달 -->
+<div id="historyModal" class="modal">
+    <div class="modal-content">
+        <span id="closeModalButton" class="close">&times;</span>
+        <p id="historyContent"></p>
+    </div>
+</div>
+
+<script src="static/JS/calculator.js"></script>
+{% endblock %}

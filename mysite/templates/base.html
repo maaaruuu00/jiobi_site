@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}홈페이지{% endblock %}</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+    {% block css %}
+    {% endblock %}
+
+    <!--광고-->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6857449583126977"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- 네비게이션 바 -->
+            <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="navbar-brand" href="main">홈페이지</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="clock">시계</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="calendar">달력</a>
+                        </li>
+                        <!--
+                        <li class="nav-item">
+                             <a class="nav-link" href="weather.html">날씨</a>
+                        </li>
+                    -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="calculator">계산기</a>
+                        </li>
+                        <!--
+                        <li class="nav-item">
+                            <a class="nav-link" href="dosage">도량형</a>
+                        </li>
+                        -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="exchange_rate">환율</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="heartrate">심박수</a>
+                        </li>
+                        <!--
+                        <li class="nav-item">
+                            <a class="nav-link" href="myip">내 IP 주소는?</a>
+                        </li>
+                        -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="bmi_calculator">BMI 계산기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="game">게임</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="blog">블로그</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- 메인 컨텐츠 -->
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <!-- 왼쪽 광고 -->
+                            <div class="advertisement" id="left-ad">
+                                <p></p>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            {% block content %}
+                            {% endblock %}
+                        </div>
+                        <div class="col-md-2">
+                            <!-- 오른쪽 광고 -->
+                            <div class="advertisement" id="right-ad">
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

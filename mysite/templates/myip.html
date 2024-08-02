@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 IP 주소 및 위치 확인</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/myip.css' %}">
+
+    <!--광고-->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6857449583126977"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- 네비게이션 바 -->
+            <div class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                              <a class="navbar-brand" href="main">홈페이지</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="clock">시계</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="calendar">달력</a>
+                        </li>
+                        <!--
+                        <li class="nav-item">
+                             <a class="nav-link" href="weather.html">날씨</a>
+                        </li>
+                    -->
+                        <li class="nav-item">
+                    <a class="nav-link" href="calculator">계산기</a>
+                </li>
+                <!--
+                <li class="nav-item">
+                    <a class="nav-link" href="dosage">도량형</a>
+                </li>
+                -->
+                <li class="nav-item">
+                    <a class="nav-link" href="exchange_rate">환율</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="heartrate">심박수</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="myip">내 IP 주소는?</a>
+                </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 메인 컨텐츠 -->
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div class="container mt-5">
+        <div class="row">
+            <div class="col text-center">
+                <button id="findMyIpBtn" class="btn btn-primary btn-lg">내 IP 주소 찾기</button>
+                <div id="myIp" class="mt-3"></div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <!-- 지도를 표시할 div -->
+                <div id="map" style="width: 100%; height: 600px;"></div>
+            </div>
+        </div>
+    </div>
+
+            </main>
+        </div>
+    </div>
+	
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="static/JS/myip.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}환율{% endblock %}
+
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/exchange_rate.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+    <div class="container">
+        <h1 class="ercword">환율 계산기</h1>
+        <p>환율을 얻을 통화와 금액을 선택합니다</p>
+        <div class="currency">
+            <div class="currency-select-wrapper">
+                <div class="currency-selected" id="currencyOne-selected">
+                    <img src="https://flagcdn.com/us.svg" alt="미국" class="flag">
+                    <span>미국</span>
+                </div>
+                <div class="currency-dropdown" id="currencyOne-dropdown">
+                    <!-- Options will be inserted here by JavaScript -->
+                </div>
+                <select class="currency-select" name="currency-one" id="currencyOne">
+                    <option value="ISK" data-flag="https://flagcdn.com/is.svg">아이슬란드</option>
+                    <option value="EGP" data-flag="https://flagcdn.com/eg.svg">이집트</option>
+                    <option value="IDR" data-flag="https://flagcdn.com/id.svg">인도네시아</option>
+                    <option value="INR" data-flag="https://flagcdn.com/in.svg">인도</option>
+                    <option value="JPY" data-flag="https://flagcdn.com/jp.svg">일본</option>
+                    <option value="CAD" data-flag="https://flagcdn.com/ca.svg">캐나다</option>
+                    <option value="CNY" data-flag="https://flagcdn.com/cn.svg">중국</option>
+                    <option value="CZK" data-flag="https://flagcdn.com/cz.svg">체코</option>
+                    <option value="CLP" data-flag="https://flagcdn.com/cl.svg">칠레</option>
+                    <option value="KRW" data-flag="https://flagcdn.com/kr.svg">한국</option>
+                    <option value="TWD" data-flag="https://flagcdn.com/tw.svg">대만</option>
+                    <option value="DKK" data-flag="https://flagcdn.com/dk.svg">덴마크</option>
+                    <option value="RUB" data-flag="https://flagcdn.com/ru.svg">러시아</option>
+                    <option value="RON" data-flag="https://flagcdn.com/ro.svg">루마니아</option>
+                    <option value="MYR" data-flag="https://flagcdn.com/my.svg">말레이시아</option>
+                    <option value="MXN" data-flag="https://flagcdn.com/mx.svg">멕시코</option>
+                    <option value="USD" data-flag="https://flagcdn.com/us.svg" selected>미국</option>
+                    <option value="VND" data-flag="https://flagcdn.com/vn.svg">베트남</option>
+                    <option value="BRL" data-flag="https://flagcdn.com/br.svg">브라질</option>
+                    <option value="SAR" data-flag="https://flagcdn.com/sa.svg">사우디아라비아</option>
+                    <option value="SEK" data-flag="https://flagcdn.com/se.svg">스웨덴</option>
+                    <option value="SGD" data-flag="https://flagcdn.com/sg.svg">싱가포르</option>
+                    <option value="CHF" data-flag="https://flagcdn.com/ch.svg">스위스</option>
+                    <option value="THB" data-flag="https://flagcdn.com/th.svg">태국</option>
+                    <option value="TRY" data-flag="https://flagcdn.com/tr.svg">터키</option>
+                    <option value="PEN" data-flag="https://flagcdn.com/pe.svg">페루</option>
+                    <option value="PHP" data-flag="https://flagcdn.com/ph.svg">필리핀</option>
+                    <option value="PLN" data-flag="https://flagcdn.com/pl.svg">폴란드</option>
+                    <option value="HUF" data-flag="https://flagcdn.com/hu.svg">헝가리</option>
+                    <option value="GBP" data-flag="https://flagcdn.com/gb.svg">영국</option>
+                    <option value="HKD" data-flag="https://flagcdn.com/hk.svg">홍콩</option>
+                    <option value="UYU" data-flag="https://flagcdn.com/uy.svg">우루과이</option>
+                    <option value="AUD" data-flag="https://flagcdn.com/au.svg">호주</option>
+                    <option value="EUR" data-flag="https://flagcdn.com/eu.svg">유로</option>
+                    <option value="ILS" data-flag="https://flagcdn.com/il.svg">이스라엘</option>
+                    <option value="COP" data-flag="https://flagcdn.com/co.svg">콜롬비아</option>
+                    <option value="NZD" data-flag="https://flagcdn.com/nz.svg">뉴질랜드</option>
+                    <option value="NOK" data-flag="https://flagcdn.com/no.svg">노르웨이</option>
+                    <option value="PKR" data-flag="https://flagcdn.com/pk.svg">파키스탄</option>
+                    <option value="ZAR" data-flag="https://flagcdn.com/za.svg">남아프리카</option>
+                </select>
+            </div>
+            <input type="number" id="amount-one" value="1">
+        </div>
+        <div class="swap-rate-container">
+            <button id="swap" class="btn">바꾸기</button>
+            <div id="rate" class="rate"></div>
+        </div>
+        <div class="currency">
+            <div class="currency-select-wrapper">
+                <div class="currency-selected" id="currencyTwo-selected">
+                    <img src="https://flagcdn.com/kr.svg" alt="한국" class="flag">
+                    <span>한국</span>
+                </div>
+                <div class="currency-dropdown" id="currencyTwo-dropdown">
+                    <!-- Options will be inserted here by JavaScript -->
+                </div>
+                <select class="currency-select" name="currency-two" id="currencyTwo">
+                    <option value="ISK" data-flag="https://flagcdn.com/is.svg">아이슬란드</option>
+                    <option value="EGP" data-flag="https://flagcdn.com/eg.svg">이집트</option>
+                    <option value="IDR" data-flag="https://flagcdn.com/id.svg">인도네시아</option>
+                    <option value="INR" data-flag="https://flagcdn.com/in.svg">인도</option>
+                    <option value="JPY" data-flag="https://flagcdn.com/jp.svg">일본</option>
+                    <option value="CAD" data-flag="https://flagcdn.com/ca.svg">캐나다</option>
+                    <option value="CNY" data-flag="https://flagcdn.com/cn.svg">중국</option>
+                    <option value="CZK" data-flag="https://flagcdn.com/cz.svg">체코</option>
+                    <option value="CLP" data-flag="https://flagcdn.com/cl.svg">칠레</option>
+                    <option value="KRW" data-flag="https://flagcdn.com/kr.svg" selected>한국</option>
+                    <option value="TWD" data-flag="https://flagcdn.com/tw.svg">대만</option>
+                    <option value="DKK" data-flag="https://flagcdn.com/dk.svg">덴마크</option>
+                    <option value="RUB" data-flag="https://flagcdn.com/ru.svg">러시아</option>
+                    <option value="RON" data-flag="https://flagcdn.com/ro.svg">루마니아</option>
+                    <option value="MYR" data-flag="https://flagcdn.com/my.svg">말레이시아</option>
+                    <option value="MXN" data-flag="https://flagcdn.com/mx.svg">멕시코</option>
+                    <option value="USD" data-flag="https://flagcdn.com/us.svg">미국</option>
+                    <option value="VND" data-flag="https://flagcdn.com/vn.svg">베트남</option>
+                    <option value="BRL" data-flag="https://flagcdn.com/br.svg">브라질</option>
+                    <option value="SAR" data-flag="https://flagcdn.com/sa.svg">사우디아라비아</option>
+                    <option value="SEK" data-flag="https://flagcdn.com/se.svg">스웨덴</option>
+                    <option value="SGD" data-flag="https://flagcdn.com/sg.svg">싱가포르</option>
+                    <option value="CHF" data-flag="https://flagcdn.com/ch.svg">스위스</option>
+                    <option value="THB" data-flag="https://flagcdn.com/th.svg">태국</option>
+                    <option value="TRY" data-flag="https://flagcdn.com/tr.svg">터키</option>
+                    <option value="PEN" data-flag="https://flagcdn.com/pe.svg">페루</option>
+                    <option value="PHP" data-flag="https://flagcdn.com/ph.svg">필리핀</option>
+                    <option value="PLN" data-flag="https://flagcdn.com/pl.svg">폴란드</option>
+                    <option value="HUF" data-flag="https://flagcdn.com/hu.svg">헝가리</option>
+                    <option value="GBP" data-flag="https://flagcdn.com/gb.svg">영국</option>
+                    <option value="HKD" data-flag="https://flagcdn.com/hk.svg">홍콩</option>
+                    <option value="UYU" data-flag="https://flagcdn.com/uy.svg">우루과이</option>
+                    <option value="AUD" data-flag="https://flagcdn.com/au.svg">호주</option>
+                    <option value="EUR" data-flag="https://flagcdn.com/eu.svg">유로</option>
+                    <option value="ILS" data-flag="https://flagcdn.com/il.svg">이스라엘</option>
+                    <option value="COP" data-flag="https://flagcdn.com/co.svg">콜롬비아</option>
+                    <option value="NZD" data-flag="https://flagcdn.com/nz.svg">뉴질랜드</option>
+                    <option value="NOK" data-flag="https://flagcdn.com/no.svg">노르웨이</option>
+                    <option value="PKR" data-flag="https://flagcdn.com/pk.svg">파키스탄</option>
+                    <option value="ZAR" data-flag="https://flagcdn.com/za.svg">남아프리카</option>
+                </select>
+            </div>
+            <input type="number" id="amount-two" value="1">
+        </div>
+    </div>
+</main>
+
+<script src="static/JS/main.js"></script>
+<script src="{% static 'JS/exchange_rate.js' %}"></script>
+{% endblock %}

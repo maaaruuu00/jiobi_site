@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}달력{% endblock %}
+
+{% block css %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="d-flex justify-content-center mb-3">
+                    <button id="previousYearButton" class="btn btn-secondary me-2">&lt;</button>
+                    <span id="currentYear" class="h4 my-auto">2024년 달력</span>
+                    <button id="nextYearButton" class="btn btn-secondary ms-2">&gt;</button>
+                    <button id="todayButton" class="btn btn-warning ms-2">오늘</button>
+                </div>
+                <div id="year-calendar"></div>
+                <div id="holiday-list" class="mt-4"></div>
+            </div>
+        </div>
+    </div>
+
+<script src="{% static 'JS/calendar_api.js' %}"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

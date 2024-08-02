@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}홈페이지{% endblock %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/mainpage.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">시계</h5>
+                    <p class="card-text">시계, 알람, 스톱워치, 타이머 기능을 사용할 수 있습니다.</p>
+                    <a href="clock" class="btn btn-primary">시계 페이지로 이동</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">달력</h5>
+                    <p class="card-text">달력을 확인하고 일정을 관리할 수 있습니다.</p>
+                    <a href="calendar" class="btn btn-primary">달력 페이지로 이동</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">계산기</h5>
+                    <p class="card-text">계산기를 사용할 수 있습니다.</p>
+                    <a href="calculator" class="btn btn-primary">계산기 페이지로 이동</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">환율</h5>
+                    <p class="card-text">다른 통화로 환전 시 실제 환율에 따른 금액을 보여줍니다</p>
+                    <a href="exchange_rate" class="btn btn-primary">환율 페이지로 이동</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">심박수</h5>
+                    <p class="card-text">심박수를 측정하고 기록할 수 있습니다.</p>
+                    <a href="heartrate" class="btn btn-primary">심박수 페이지로 이동</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">BMI 계산기</h5>
+                    <p class="card-text">BMI를 계산하고 건강 상태를 확인할 수 있습니다.</p>
+                    <a href="bmi_calculator" class="btn btn-primary">BMI 계산기 페이지로 이동</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">블로그</h5>
+                    <p class="card-text">블로그</p>
+                    <a href="blog" class="btn btn-primary">블로그 페이지로 이동</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}
