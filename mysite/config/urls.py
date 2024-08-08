@@ -21,4 +21,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('util.urls')),
+    path('memorytest_app/', include('memorytest_app.urls')),
+    path('reactiontime_app/', include('reactiontime_app.urls')),
 ]
