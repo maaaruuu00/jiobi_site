@@ -17,6 +17,7 @@ urlpatterns = [
     path('basetest', views.basetest, name='basetest'),
     path('bmi_calculator', views.bmi_calculator, name='bmi_calculator'),
     path('blog', views.blog, name='blog'),
+    path('doryang', views.doryang, name='doryang'),
 
     path('game', views.game, name='game'),
 ]
