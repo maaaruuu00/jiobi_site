@@ -42,8 +42,12 @@
     <div class="container">
         <h1>게임 종료</h1>
         <p class="score">최종 점수: {{ score }}</p>
+        <!--
         <button class="button" onclick="window.location.href='/start'">종료</button>
         <button class="button" onclick="window.location.href='/play'">다시 시작</button>
+        -->
+        <button class="button" onclick="window.location.href='{% url 'start' %}'">종료</button>
+        <button class="button" onclick="window.location.href='{% url 'play' %}'">다시 시작</button>
     </div>
 </body>
 </html>

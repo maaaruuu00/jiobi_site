@@ -208,7 +208,9 @@
             } else {
                 clearInterval(gameInterval);
                 clearInterval(stateInterval);
-                window.location.href = `/end?score=${score}`;
+                // window.location.href = `/end?score=${score}`;
+                window.location.href = "{% url 'end' %}?score=" + score;
+
             }
 
             if (timeLeft % 15 === 0 && timeLeft !== 15) {  // 파트별 시간 15초
