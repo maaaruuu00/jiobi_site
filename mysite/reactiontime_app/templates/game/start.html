@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>반응 속도 게임</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent; /* 모바일에서 터치시 하이라이트 제거 */
+        }
+        .container {
+            text-align: center;
+        }
+        .button {
+            padding: 20px 40px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            user-select: none; /* 텍스트 선택 방지 */
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .button:active {
+            background-color: #004085; /* 터치시 활성화 색상 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>반응 속도 게임</h1>
+        <button class="button" onclick="window.location.href='{% url 'play' %}'">시작하기</button>
+    </div>
+</body>
+</html>

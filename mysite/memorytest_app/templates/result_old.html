@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기억력 테스트 게임 - 결과</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+        }
+        .words-list {
+            font-size: 1.5em; /* 글자 크기를 1.5배로 */
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .words-list li {
+            margin: 10px 0;
+            display: flex;
+            justify-content: center; /* 중앙 정렬 */
+            align-items: center;
+        }
+        .input-word {
+            font-size: 1em; /* 입력 폼의 글자 크기 */
+            padding: 5px;
+            width: 200px;
+            text-align: center;
+            margin: 5px;
+            border: 2px solid #000; /* 기본 테두리 색상 */
+        }
+        .correct {
+            border-color: blue; /* 맞춘 단어의 테두리 색상 */
+        }
+        .incorrect {
+            border-color: red; /* 틀린 단어의 테두리 색상 */
+        }
+        .btn-retry {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn-retry:hover {
+            background-color: #218838;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var message = "{{ message }}";
+            if (message.indexOf("정답입니다!") !== -1) {
+                setTimeout(function() {
+                    window.location.href = "{% url 'index' %}";
+                }, 3000); // 3초 후 자동으로 다음 단계로 이동
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>기억력 테스트 게임</h1>
+        <p>{{ message }}</p>
+        <ul class="words-list">
+            {% for correct_word, given_word in word_pairs %}
+                <li>
+                    <input type="text" class="input-word" value="{{ correct_word }}" disabled>
+                    <input type="text" class="input-word {% if correct_word == given_word %}correct{% else %}incorrect{% endif %}" value="{{ given_word }}" disabled>
+                </li>
+            {% endfor %}
+        </ul>
+        {% if not "정답입니다!" in message %}
+            <a href="{% url 'index' %}" class="btn-retry">다시 하기</a>
+        {% endif %}
+    </div>
+</body>
+</html>

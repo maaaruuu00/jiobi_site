@@ -8,95 +8,108 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1 class="text-center mb-4">도량형 변환기</h1>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card mb-4 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title text-center">길이 변환</h5>
-                    <div class="form-group">
-                        <input type="number" class="form-control" id="length-input" placeholder="값 입력">
-                        <select class="form-control mt-2" id="length-unit">
-                            <option value="meter">미터</option>
-                            <option value="kilometer">킬로미터</option>
-                            <option value="centimeter">센티미터</option>
-                            <option value="millimeter">밀리미터</option>
-                            <option value="mile">마일</option>
-                            <option value="yard">야드</option>
-                            <option value="foot">피트</option>
-                            <option value="inch">인치</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-primary mt-2" onclick="convertLength()">변환</button>
-                    <div class="mt-2" id="length-result"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card mb-4 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title text-center">무게 변환</h5>
-                    <div class="form-group">
-                        <input type="number" class="form-control" id="weight-input" placeholder="값 입력">
-                        <select class="form-control mt-2" id="weight-unit">
-                            <option value="kilogram">킬로그램</option>
-                            <option value="gram">그램</option>
-                            <option value="milligram">밀리그램</option>
-                            <option value="ton">톤</option>
-                            <option value="pound">파운드</option>
-                            <option value="ounce">온스</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-primary mt-2" onclick="convertWeight()">변환</button>
-                    <div class="mt-2" id="weight-result"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card mb-4 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title text-center">부피 변환</h5>
-                    <div class="form-group">
-                        <input type="number" class="form-control" id="volume-input" placeholder="값 입력">
-                        <select class="form-control mt-2" id="volume-unit">
-                            <option value="liter">리터</option>
-                            <option value="milliliter">밀리리터</option>
-                            <option value="cubic-meter">세제곱미터</option>
-                            <option value="cubic-centimeter">세제곱센티미터</option>
-                            <option value="gallon">갤런</option>
-                            <option value="pint">파인트</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-primary mt-2" onclick="convertVolume()">변환</button>
-                    <div class="mt-2" id="volume-result"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card mb-4 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title text-center">넓이 변환</h5>
-                    <div class="form-group">
-                        <input type="number" class="form-control" id="area-input" placeholder="값 입력">
-                        <select class="form-control mt-2" id="area-unit">
-                            <option value="square-meter">제곱미터</option>
-                            <option value="square-kilometer">제곱킬로미터</option>
-                            <option value="square-centimeter">제곱센티미터</option>
-                            <option value="square-millimeter">제곱밀리미터</option>
-                            <option value="hectare">헥타르</option>
-                            <option value="acre">에이커</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-primary mt-2" onclick="convertArea()">변환</button>
-                    <div class="mt-2" id="area-result"></div>
-                </div>
-            </div>
-        </div>
+<div class="container">
+    <h1>길이 변환</h1>
+    <div class="form-group">
+        <input type="text" id="inputValue" value="0">
+        <select id="unit">
+            <option value="cm">센티미터(cm)</option>
+            <option value="m">미터(m)</option>
+            <option value="inch">인치(inch)</option>
+            <option value="feet">피트(feet)</option>
+            <option value="yard">야드(yard)</option>
+            <option value="mile">마일(mile)</option>
+            <option value="ja">자</option>
+            <option value="gan">간</option>
+            <option value="jeng">정</option>
+            <option value="li">리</option>
+            <option value="knot">해리(海理)</option>
+        </select>
+        <button onclick="convertLength()">변환</button>
+    </div>
+    <div class="result-table">
+        <table>
+            <tr>
+                <td><label for="cm">센티미터</label></td>
+                <td><input type="text" id="cm" readonly></td>
+                <td><label for="m">미터</label></td>
+                <td><input type="text" id="m" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="inch">인치</label></td>
+                <td><input type="text" id="inch" readonly></td>
+                <td><label for="feet">피트</label></td>
+                <td><input type="text" id="feet" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="yard">야드</label></td>
+                <td><input type="text" id="yard" readonly></td>
+                <td><label for="mile">마일</label></td>
+                <td><input type="text" id="mile" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="ja">자</label></td>
+                <td><input type="text" id="ja" readonly></td>
+                <td><label for="gan">간</label></td>
+                <td><input type="text" id="gan" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="jeng">정</label></td>
+                <td><input type="text" id="jeng" readonly></td>
+                <td><label for="li">리</label></td>
+                <td><input type="text" id="li" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="knot">해리(海理)</label></td>
+                <td><input type="text" id="knot" readonly></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
     </div>
 </div>
 {% endblock %}
 
 {% block javascript %}
-<script src="{% static 'JS/doryang.js' %}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("convertLength is loaded");
+
+    function convertLength() {
+        const inputValue = parseFloat(document.getElementById('inputValue').value);
+        const unit = document.getElementById('unit').value;
+        console.log("convertLength function has been defined");
+
+        const conversionRates = {
+            cm: 1,
+            m: 0.01,
+            inch: 0.393701,
+            feet: 0.0328084,
+            yard: 0.0109361,
+            mile: 0.0000062137,
+            ja: 0.033,
+            gan: 0.0055,
+            jeng: 0.000109361,
+            li: 0.0000025,
+            knot: 0.0000053996
+        };
+
+        const cmValue = inputValue / conversionRates[unit];
+
+        document.getElementById('cm').value = (cmValue * conversionRates.cm).toFixed(4);
+        document.getElementById('m').value = (cmValue * conversionRates.m).toFixed(4);
+        document.getElementById('inch').value = (cmValue * conversionRates.inch).toFixed(4);
+        document.getElementById('feet').value = (cmValue * conversionRates.feet).toFixed(4);
+        document.getElementById('yard').value = (cmValue * conversionRates.yard).toFixed(4);
+        document.getElementById('mile').value = (cmValue * conversionRates.mile).toFixed(4);
+        document.getElementById('ja').value = (cmValue * conversionRates.ja).toFixed(4);
+        document.getElementById('gan').value = (cmValue * conversionRates.gan).toFixed(4);
+        document.getElementById('jeng').value = (cmValue * conversionRates.jeng).toFixed(4);
+        document.getElementById('li').value = (cmValue * conversionRates.li).toFixed(4);
+        document.getElementById('knot').value = (cmValue * conversionRates.knot).toFixed(4);
+    }
+});
+</script>
 {% endblock %}
+
+

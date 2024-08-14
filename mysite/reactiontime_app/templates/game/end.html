@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>게임 종료</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent; /* 모바일 터치 하이라이트 제거 */
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            font-size: 72px; /* 게임 종료 제목을 크게 표시 */
+        }
+        .score {
+            font-size: 48px; /* 점수를 크게 표시 */
+            margin-bottom: 20px;
+        }
+        .button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 36px;
+            cursor: pointer;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            user-select: none; /* 텍스트 선택 방지 */
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .button:active {
+            background-color: #004085; /* 터치시 활성화 색상 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>게임 종료</h1>
+        <p class="score">최종 점수: {{ score }}</p>
+        <button class="button" onclick="window.location.href='{% url 'start' %}'">종료</button>
+        <button class="button" onclick="window.location.href='{% url 'play' %}'">다시 시작</button>
+    </div>
+</body>
+</html>

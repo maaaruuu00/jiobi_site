@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기억력 테스트 게임</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+        }
+        .words-list {
+            font-size: 1.5em; /* 글자 크기를 1.5배로 */
+            list-style-type: none;
+            padding: 0;
+        }
+        .words-list li {
+            margin: 10px 0;
+            display: flex;
+            justify-content: center; /* 중앙 정렬 */
+            align-items: center;
+        }
+        .input-word {
+            font-size: 1em; /* 입력 폼의 글자 크기 */
+            padding: 5px;
+            width: 200px;
+            text-align: center;
+            margin: 5px;
+        }
+        .hidden-word {
+            color: transparent; /* 글자를 투명하게 설정 */
+        }
+        #time {
+            font-size: 1.5em;
+            color: red;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: -150px; /* form의 오른쪽에서 150px 간격 */
+        }
+        .btn-submit {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+        .hidden-words {
+            display: none;
+        }
+        #memory-test-form {
+            position: relative;
+        }
+        #input-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* 중앙 정렬 */
+        }
+        .instructions {
+            text-align: left;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+    <script>
+        function startTimer(duration) {
+            var timer = duration, seconds;
+            var display = document.getElementById('time');
+            var interval = setInterval(function () {
+                seconds = parseInt(timer % 60, 10);
+
+                display.textContent = seconds + "초 남음";
+
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    var inputs = document.querySelectorAll('.input-word');
+                    inputs.forEach(function(input) {
+                        if (input.disabled) {
+                            input.classList.add('hidden-word');
+                        } else {
+                            input.disabled = false;
+                            input.value = '';  // 입력창 초기화
+                        }
+                    });
+                    document.getElementById('words-display').remove();
+                    document.getElementById('memory-test-form').style.display = 'block';
+                    document.getElementById('instruction').textContent = '기억한 단어들을 순서대로 입력하세요';
+                    display.textContent = '';
+                    // 첫 번째 입력창으로 커서 이동
+                    document.querySelector('.input-word:not([disabled])').focus();
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            var wordsCount = {{ words|length }};
+            var timePerWord = 3;
+            var totalTime = wordsCount * timePerWord;
+            startTimer(totalTime);
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>기억력 테스트 게임</h1>
+        <p id="instruction">이 단어들을 순서대로 기억하세요</p>
+        <div id="words-display">
+            <ul class="words-list">
+                {% for word in words %}
+                    <li>
+                        <input type="text" class="input-word" value="{{ word }}" disabled>
+                        <input type="text" class="input-word" disabled>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <form id="memory-test-form" action="{% url 'check' %}" method="post" style="display:none; position: relative;">
+            {% csrf_token %}
+            {% for word in words %}
+                <input type="hidden" name="correct_words" value="{{ word }}">
+            {% endfor %}
+            <ul class="words-list" id="input-list">
+                {% for word in words %}
+                    <li>
+                        <input type="text" class="input-word hidden-word" value="{{ word }}" disabled>
+                        <input type="text" name="words" class="input-word">
+                    </li>
+                {% endfor %}
+            </ul>
+            <br>
+            <button type="submit" class="btn-submit">제출</button>
+            <div class="instructions">
+                아래 칸으로 이동 : Tab 버튼<br>
+                위 칸으로 이동 : Shift버튼 누르고 있는 상태에서 Tab 버튼<br>
+                제출 : Enter
+            </div>
+        </form>
+        <div id="time"></div>
+    </div>
+</body>
+</html>

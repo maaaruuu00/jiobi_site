@@ -1,43 +1,79 @@
+/* doryang.css */
+
 body {
-    font-family: 'Dovemayo_gothic', sans-serif;
+    font-family: '돋움', sans-serif;
+    background-color: #FFFFFF;
+    color: #000000;
+    margin: 0;
+    padding: 0;
 }
 
-.sidebar {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 100;
-    padding: 5px 0 0;
-    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.sidebar-sticky {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    height: calc(100vh - 48px);
-    padding-top: .5rem;
-    overflow-x: hidden;
-    overflow-y: auto;
+h1 {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    text-align: center;
 }
 
-.nav-link {
-    color: #333;
-    font-size: 1.25rem;
+table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
 }
 
-.nav-link.active {
-    color: #007bff;
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
 }
 
-/* 공통 스타일 */
-.card {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+th {
+    background-color: yellow;
 }
 
-.card-body {
-    padding: 2rem;
+input[type="text"], select {
+    width: 100%;
+    padding: 5px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    text-align: right; /* 이 부분은 제가 제안한 코드에서 추가 */
+}
+
+label {
+    width: 100px;
+    display: inline-block;
+}
+
+.result-table {
+    width: 100%;
+}
+
+.result-table th,
+.result-table td {
+    padding: 5px;
+    text-align: left;
+    background-color: #f2f2f2;
+}
+
+hr {
+    border: 1px solid gray;
+}
+
+button {
+    padding: 5px 10px;
+    margin-top: 10px;
+}
+
+#length-results, #weight-results, #volume-results, #area-results {
+    margin-top: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
 }

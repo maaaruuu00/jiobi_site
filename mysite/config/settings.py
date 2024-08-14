@@ -27,7 +27,8 @@ SECRET_KEY = 'django-insecure-d@$bg$=&)7vyg6jg^8+lt#4pb#1=f7faef1=pgi7g9_dhuanl#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['jiobi.kr','www.jiobi.kr','127.0.0.1','jiobi.gabia.io','211.47.75.63']
+# ALLOWED_HOSTS = ['jiobi.kr','www.jiobi.kr','127.0.0.1','jiobi.gabia.io','211.47.75.63']
+ALLOWED_HOSTS = ['jiobi.kr', 'www.jiobi.kr', '127.0.0.1', 'localhost', 'jiobi.gabia.io', '211.47.75.63'] # kh_20240808
 
 
 # Application definition
@@ -39,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'memorytest_app',
+    'reactiontime_app',
 ]
 
 MIDDLEWARE = [
@@ -119,7 +122,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 
