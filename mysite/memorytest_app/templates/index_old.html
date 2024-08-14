@@ -12,7 +12,6 @@
             align-items: center;
             height: 100vh;
             background-color: #f0f0f0;
-            margin: 0;
         }
         .container {
             background-color: #ffffff;
@@ -22,7 +21,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
             position: relative;
-            max-width: 90%;
         }
         .words-list {
             font-size: 1.5em; /* 글자 크기를 1.5배로 */
@@ -38,8 +36,7 @@
         .input-word {
             font-size: 1em; /* 입력 폼의 글자 크기 */
             padding: 5px;
-            width: 100%;
-            max-width: 200px;
+            width: 200px;
             text-align: center;
             margin: 5px;
         }
@@ -63,8 +60,7 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        .btn-submit:hover,
-        .btn-submit:active {
+        .btn-submit:hover {
             background-color: #0056b3;
         }
         .hidden-words {
@@ -83,7 +79,6 @@
             margin-top: 10px;
             font-size: 0.9em;
             color: #555;
-            max-width: 100%;
         }
     </style>
     <script>
@@ -122,24 +117,6 @@
             var totalTime = wordsCount * timePerWord;
             startTimer(totalTime);
         };
-
-        // 모바일 키보드 닫기
-        document.addEventListener('input', function (event) {
-            if (event.target.classList.contains('input-word')) {
-                event.target.addEventListener('blur', function () {
-                    window.scrollTo(0, 0);
-                });
-            }
-        });
-
-        // 제출 버튼 터치 이벤트 처리
-        document.querySelector('.btn-submit').addEventListener('touchstart', function() {
-            this.style.backgroundColor = '#0056b3';
-        });
-
-        document.querySelector('.btn-submit').addEventListener('touchend', function() {
-            this.style.backgroundColor = '#007bff';
-        });
     </script>
 </head>
 <body>
@@ -165,7 +142,7 @@
                 {% for word in words %}
                     <li>
                         <input type="text" class="input-word hidden-word" value="{{ word }}" disabled>
-                        <input type="text" name="words" class="input-word" autocomplete="off">
+                        <input type="text" name="words" class="input-word">
                     </li>
                 {% endfor %}
             </ul>
