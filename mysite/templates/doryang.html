@@ -11,8 +11,8 @@
 <div class="container">
     <h1>길이 변환</h1>
     <div class="form-group">
-        <input type="text" id="inputValue" value="0">
-        <select id="unit">
+        <input type="text" id="lengthInput" value="0">
+        <select id="lengthUnit">
             <option value="cm">센티미터(cm)</option>
             <option value="m">미터(m)</option>
             <option value="inch">인치(inch)</option>
@@ -25,7 +25,7 @@
             <option value="li">리</option>
             <option value="knot">해리(海理)</option>
         </select>
-        <button onclick="convertLength()">변환</button>
+        <button id="lengthConvertButton">변환</button>
     </div>
     <div class="result-table">
         <table>
@@ -67,49 +67,163 @@
             </tr>
         </table>
     </div>
+
+    <h1>무게 변환</h1>
+    <div class="form-group">
+        <input type="text" id="weightInput" value="0">
+        <select id="weightUnit">
+            <option value="g">그램(g)</option>
+            <option value="kg">킬로그램(kg)</option>
+            <option value="ton">톤(ton)</option>
+            <option value="grain">그레인(grain)</option>
+            <option value="ounce">온스(ounce)</option>
+            <option value="pound">파운드(pound)</option>
+            <option value="don">돈</option>
+            <option value="gun">근</option>
+            <option value="guan">관</option>
+        </select>
+        <button id="weightConvertButton">변환</button>
+    </div>
+    <div class="result-table">
+        <table>
+            <tr>
+                <td><label for="g">그램</label></td>
+                <td><input type="text" id="g" readonly></td>
+                <td><label for="kg">킬로그램</label></td>
+                <td><input type="text" id="kg" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="ton">톤</label></td>
+                <td><input type="text" id="ton" readonly></td>
+                <td><label for="grain">그레인</label></td>
+                <td><input type="text" id="grain" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="ounce">온스</label></td>
+                <td><input type="text" id="ounce" readonly></td>
+                <td><label for="pound">파운드</label></td>
+                <td><input type="text" id="pound" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="don">돈</label></td>
+                <td><input type="text" id="don" readonly></td>
+                <td><label for="gun">근</label></td>
+                <td><input type="text" id="gun" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="guan">관</label></td>
+                <td><input type="text" id="guan" readonly></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+    <h1>넓이 변환</h1>
+    <div class="form-group">
+        <input type="text" id="areaInput" value="0">
+        <select id="areaUnit">
+            <option value="pyong">평방자</option>
+            <option value="py">평</option>
+            <option value="danbo">단보</option>
+            <option value="jeongbo">정보</option>
+            <option value="sqm">평방미터</option>
+            <option value="are">아르</option>
+            <option value="sqft">평방피트</option>
+            <option value="sqyd">평방야드</option>
+            <option value="acre">에이커</option>
+        </select>
+        <button id="areaConvertButton">변환</button>
+    </div>
+    <div class="result-table">
+        <table>
+            <tr>
+                <td><label for="pyong">평방자</label></td>
+                <td><input type="text" id="pyong" readonly></td>
+                <td><label for="py">평</label></td>
+                <td><input type="text" id="py" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="danbo">단보</label></td>
+                <td><input type="text" id="danbo" readonly></td>
+                <td><label for="jeongbo">정보</label></td>
+                <td><input type="text" id="jeongbo" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="sqm">평방미터</label></td>
+                <td><input type="text" id="sqm" readonly></td>
+                <td><label for="are">아르</label></td>
+                <td><input type="text" id="are" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="sqft">평방피트</label></td>
+                <td><input type="text" id="sqft" readonly></td>
+                <td><label for="sqyd">평방야드</label></td>
+                <td><input type="text" id="sqyd" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="acre">에이커</label></td>
+                <td><input type="text" id="acre" readonly></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+    <h1>부피 변환</h1>
+    <div class="form-group">
+        <input type="text" id="volumeInput" value="0">
+        <select id="volumeUnit">
+            <option value="hob">홉</option>
+            <option value="doe">되</option>
+            <option value="mal">말</option>
+            <option value="ccm">입방센치</option>
+            <option value="cbm">입방미터</option>
+            <option value="liter">리터</option>
+            <option value="cubicInch">입방인치</option>
+            <option value="cubicFeet">입방피트</option>
+            <option value="cubicYard">입방야드</option>
+            <option value="gallon">갤론</option>
+        </select>
+        <button id="volumeConvertButton">변환</button>
+    </div>
+    <div class="result-table">
+        <table>
+            <tr>
+                <td><label for="hob">홉</label></td>
+                <td><input type="text" id="hob" readonly></td>
+                <td><label for="doe">되</label></td>
+                <td><input type="text" id="doe" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="mal">말</label></td>
+                <td><input type="text" id="mal" readonly></td>
+                <td><label for="ccm">입방센치</label></td>
+                <td><input type="text" id="ccm" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="cbm">입방미터</label></td>
+                <td><input type="text" id="cbm" readonly></td>
+                <td><label for="liter">리터</label></td>
+                <td><input type="text" id="liter" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="cubicInch">입방인치</label></td>
+                <td><input type="text" id="cubicInch" readonly></td>
+                <td><label for="cubicFeet">입방피트</label></td>
+                <td><input type="text" id="cubicFeet" readonly></td>
+            </tr>
+            <tr>
+                <td><label for="cubicYard">입방야드</label></td>
+                <td><input type="text" id="cubicYard" readonly></td>
+                <td><label for="gallon">갤론</label></td>
+                <td><input type="text" id="gallon" readonly></td>
+            </tr>
+        </table>
+    </div>
 </div>
 {% endblock %}
 
 {% block javascript %}
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    console.log("convertLength is loaded");
-
-    function convertLength() {
-        const inputValue = parseFloat(document.getElementById('inputValue').value);
-        const unit = document.getElementById('unit').value;
-        console.log("convertLength function has been defined");
-
-        const conversionRates = {
-            cm: 1,
-            m: 0.01,
-            inch: 0.393701,
-            feet: 0.0328084,
-            yard: 0.0109361,
-            mile: 0.0000062137,
-            ja: 0.033,
-            gan: 0.0055,
-            jeng: 0.000109361,
-            li: 0.0000025,
-            knot: 0.0000053996
-        };
-
-        const cmValue = inputValue / conversionRates[unit];
-
-        document.getElementById('cm').value = (cmValue * conversionRates.cm).toFixed(4);
-        document.getElementById('m').value = (cmValue * conversionRates.m).toFixed(4);
-        document.getElementById('inch').value = (cmValue * conversionRates.inch).toFixed(4);
-        document.getElementById('feet').value = (cmValue * conversionRates.feet).toFixed(4);
-        document.getElementById('yard').value = (cmValue * conversionRates.yard).toFixed(4);
-        document.getElementById('mile').value = (cmValue * conversionRates.mile).toFixed(4);
-        document.getElementById('ja').value = (cmValue * conversionRates.ja).toFixed(4);
-        document.getElementById('gan').value = (cmValue * conversionRates.gan).toFixed(4);
-        document.getElementById('jeng').value = (cmValue * conversionRates.jeng).toFixed(4);
-        document.getElementById('li').value = (cmValue * conversionRates.li).toFixed(4);
-        document.getElementById('knot').value = (cmValue * conversionRates.knot).toFixed(4);
-    }
-});
-</script>
+<script src="{% static 'JS/doryang.js' %}"></script>
 {% endblock %}
-
-

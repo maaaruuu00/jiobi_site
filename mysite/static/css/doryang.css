@@ -14,7 +14,7 @@ body {
     padding: 20px;
 }
 
-h1 {
+h1, h2 {
     background-color: black;
     color: white;
     padding: 10px;
@@ -42,23 +42,6 @@ input[type="text"], select {
     padding: 5px;
     margin: 5px 0;
     box-sizing: border-box;
-    text-align: right; /* 이 부분은 제가 제안한 코드에서 추가 */
-}
-
-label {
-    width: 100px;
-    display: inline-block;
-}
-
-.result-table {
-    width: 100%;
-}
-
-.result-table th,
-.result-table td {
-    padding: 5px;
-    text-align: left;
-    background-color: #f2f2f2;
 }
 
 hr {
@@ -74,6 +57,15 @@ button {
     margin-top: 10px;
 }
 
-.form-group {
-    margin-bottom: 20px;
+/* New CSS for centering label text */
+label {
+    display: inline-block;
+    width: 80px; /* 원하는 고정 길이 설정 */
+    text-align: center;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+
+td {
+    text-align: center;
+    vertical-align: middle; /* 세로 정렬도 중앙으로 */
 }
