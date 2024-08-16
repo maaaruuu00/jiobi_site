@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'memorytest_app',
     'reactiontime_app',
+    'locationmemory_app',
 ]
 
 MIDDLEWARE = [
