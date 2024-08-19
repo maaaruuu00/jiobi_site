@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Sequence Game</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/numbersequence.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="score">Score: <span id="score">0</span></div>
+            <div class="timer">Time: <span id="time">0</span></div>
+        </div>
+        <div id="game-board" class="game-board">
+            <!-- 게임 칸이 여기에 동적으로 추가될 예정 -->
+        </div>
+        <div class="controls">
+            <button id="restart-button" class="btn btn-primary">다시 시작</button>
+            <button id="end-button" class="btn btn-secondary">종료</button>
+        </div>
+    </div>
+    <script src="{% static 'JS/numbersequence.js' %}"></script>
+</body>
+</html>

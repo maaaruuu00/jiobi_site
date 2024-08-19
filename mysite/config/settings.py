@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'memorytest_app',
     'reactiontime_app',
     'locationmemory_app',
+    'numbersequence_app',
 ]
 
 MIDDLEWARE = [

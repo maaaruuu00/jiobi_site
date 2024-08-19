@@ -24,5 +24,5 @@ urlpatterns = [
     path('memorytest_app/', include('memorytest_app.urls')),
     path('reactiontime_app/', include('reactiontime_app.urls')),
     path('locationmemory_app/', include('locationmemory_app.urls')),
-    
+    path('numbersequence/', include('numbersequence_app.urls')),
 ]
