@@ -13,12 +13,20 @@
             <div class="score">Score: <span id="score">0</span></div>
             <div class="timer">Time: <span id="time">0</span></div>
         </div>
+        <div id="game-instruction" class="game-instruction">
+            숫자를 주어진 시간 안에 순서대로 모두 누르세요
+        </div>
         <div id="game-board" class="game-board">
             <!-- 게임 칸이 여기에 동적으로 추가될 예정 -->
         </div>
         <div class="controls">
+            <!-- 기존의 버튼을 제거하거나 주석 처리합니다 -->
+             <!--
             <button id="restart-button" class="btn btn-primary">다시 시작</button>
             <button id="end-button" class="btn btn-secondary">종료</button>
+            -->
+            <a id="hidden-game-link" href="{% url 'game' %}" style="display:none;"></a> 
+            
         </div>
     </div>
     <script src="{% static 'JS/numbersequence.js' %}"></script>
