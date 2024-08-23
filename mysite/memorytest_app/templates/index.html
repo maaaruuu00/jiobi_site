@@ -49,10 +49,10 @@
         #time {
             font-size: 1.5em;
             color: red;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            right: -150px; /* form의 오른쪽에서 150px 간격 */
+            margin-top: 10px; /* instruction 아래에 배치되도록 여백 추가 */
+            position: relative;
+            top: 0;
+            right: 0;
         }
         .btn-submit {
             font-size: 1.2em;
@@ -93,8 +93,6 @@
             var interval = setInterval(function () {
                 seconds = parseInt(timer % 60, 10);
 
-                display.textContent = seconds + "초 남음";
-
                 if (--timer < 0) {
                     clearInterval(interval);
                     var inputs = document.querySelectorAll('.input-word');
@@ -112,6 +110,9 @@
                     display.textContent = '';
                     // 첫 번째 입력창으로 커서 이동
                     document.querySelector('.input-word:not([disabled])').focus();
+                } else {
+                    document.getElementById('instruction').textContent = '기억한 단어들을 순서대로 입력하세요';
+                    display.textContent = seconds + "초 남음";  // 위치를 이곳으로 이동
                 }
             }, 1000);
         }
@@ -146,6 +147,7 @@
     <div class="container">
         <h1>기억력 테스트 게임</h1>
         <p id="instruction">이 단어들을 순서대로 기억하세요</p>
+        <div id="time"></div> <!-- 타이머 위치 이동 -->
         <div id="words-display">
             <ul class="words-list">
                 {% for word in words %}
@@ -177,7 +179,6 @@
                 제출 : Enter
             </div>
         </form>
-        <div id="time"></div>
     </div>
 </body>
 </html>
