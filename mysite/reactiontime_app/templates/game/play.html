@@ -26,7 +26,7 @@
             display: inline-block;
             margin-right: 20px;
         }
-        #current-score { /* 추가된 CSS */
+        #current-score {
             display: inline-block;
             margin-right: 20px;
         }
@@ -47,7 +47,7 @@
     <div id="scoreboard">
         <div id="stage">단계: 1</div>
         <div id="score">게임점수: 0</div>
-        <div id="current-score">단계 점수: 0</div> <!-- 추가 -->
+        <div id="current-score">단계 점수: 0</div>
         <div id="time">남은 시간: 15초</div>
     </div>
     <canvas id="gameCanvas"></canvas>
@@ -75,7 +75,7 @@
         let radius = 40; // 초기 반지름
         let currentStageScore = 0; // 현 단계 점수 추가
         const timeElement = document.getElementById('time');
-        const currentScoreElement = document.getElementById('current-score'); // 요소 추가
+        const currentScoreElement = document.getElementById('current-score');
 
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -171,7 +171,6 @@
         canvas.addEventListener('touchstart', handleInteraction);
 
         function handleInteraction(event) {
-            // 모바일에서 터치 위치를 가져오도록 처리
             const rect = canvas.getBoundingClientRect();
             const clientX = event.clientX || event.touches[0].clientX;
             const clientY = event.clientY || event.touches[0].clientY;
