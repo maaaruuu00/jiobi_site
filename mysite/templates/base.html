@@ -24,13 +24,13 @@
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="navbar-brand" href="main">홈페이지</a>
+                            <a class="navbar-brand" href="{% url 'main' %}">홈페이지</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="clock">시계</a>
+                            <a class="nav-link" href="{% url 'clock' %}">시계</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="calendar">달력</a>
+                            <a class="nav-link" href="{% url 'calendar' %}">달력</a>
                         </li>
                         <!--
                         <li class="nav-item">
@@ -38,13 +38,13 @@
                         </li>
                     -->
                         <li class="nav-item">
-                            <a class="nav-link" href="calculator">계산기</a>
+                            <a class="nav-link" href="{% url 'calculator' %}">계산기</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="exchange_rate">환율</a>
+                            <a class="nav-link" href="{% url 'exchange_rate' %}">환율</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="heartrate">심박수</a>
+                            <a class="nav-link" href="{% url 'heartrate' %}">심박수</a>
                         </li>
                         <!--
                         <li class="nav-item">
@@ -52,16 +52,16 @@
                         </li>
                         -->
                         <li class="nav-item">
-                            <a class="nav-link" href="bmi_calculator">BMI 계산기</a>
+                            <a class="nav-link" href="{% url 'bmi_calculator' %}">BMI 계산기</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="doryang">도량형 계산기</a>
+                            <a class="nav-link" href="{% url 'doryang' %}">도량형 계산기</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="game">게임</a>
+                            <a class="nav-link" href="{% url 'game' %}">게임</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="blog">블로그</a>
+                            <a class="nav-link" href="{% url 'blog' %}">블로그</a>
                         </li>
                     </ul>
                 </div>

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Location Memory Game{% endblock %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/locationmemory.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">정확한 위치에 기억한 도형을 남은 시간 내에 옮기세요.</h2>
+
+    <div class="row mt-4 text-center">
+        <div class="col">
+            <h4>총 점수: <span id="total-score">0</span></h4>
+        </div>
+        <div class="col">
+            <h4 id="memory-time-container">기억하는 시간: <span id="memory-time"></span> 초</h4>
+            <h4 id="remaining-time-container" style="display:none;">남은 시간: <span id="remaining-time"></span> 초</h4>
+        </div>
+    </div>
+
+    <!-- 게임 종료 메시지 -->
+    <div id="game-over-message" class="text-center mt-3">
+        <h3>게임이 끝났어요.</h3>
+        <button id="restart-button" class="btn btn-primary">다시하기</button>
+        <a href="{% url 'game' %}" class="btn btn-secondary">종료</a>
+    </div>
+
+    <div class="row mt-4 flex-column align-items-center">
+        <!-- 위쪽 4x4 그리드 -->
+        <div class="col-12 mb-4">
+            <div id="top-grid" class="grid">
+                {% for i in "0123456789ABCDEF" %}
+                <div class="grid-cell" id="top-cell-{{ forloop.counter0 }}"></div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- 아래쪽 4x4 그리드 -->
+        <div class="col-12">
+            <div id="bottom-grid" class="grid">
+                {% for i in "0123456789ABCDEF" %}
+                <div class="grid-cell draggable" id="bottom-cell-{{ forloop.counter0 }}">
+                    <img src="{% static 'images/shape{{ forloop.counter0 }}.png' %}" alt="Shape {{ forloop.counter0 }}">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'JS/locationmemory.js' %}"></script>
+{% endblock %}
