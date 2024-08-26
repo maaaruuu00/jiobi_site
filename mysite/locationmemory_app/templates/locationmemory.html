@@ -43,13 +43,15 @@
             <div id="bottom-grid" class="grid">
                 {% for i in "0123456789ABCDEF" %}
                 <div class="grid-cell draggable" id="bottom-cell-{{ forloop.counter0 }}">
-                    <img src="{% static 'images/shape{{ forloop.counter0 }}.png' %}" alt="Shape {{ forloop.counter0 }}">
+                    <img src="{% static 'images/shape' %}{{ forloop.counter0 }}.png" alt="Shape {{ forloop.counter0 }}">
                 </div>
                 {% endfor %}
             </div>
         </div>
     </div>
 </div>
+<!-- 정적 파일 경로 전달 -->
+<input type="hidden" id="static-url" value="{% static '' %}">
 {% endblock %}
 
 {% block javascript %}
