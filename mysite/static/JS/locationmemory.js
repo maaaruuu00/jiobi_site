@@ -151,22 +151,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function handleTouchStart(e) {
         draggedItem = this;
+        draggedItem.style.position = 'absolute'; // 드래그하는 아이템을 절대 위치로 설정
+        draggedItem.style.zIndex = '1000'; // 드래그하는 동안 z-index를 높게 설정
     }
 
     function handleTouchMove(e) {
         e.preventDefault();
         const touchLocation = e.targetTouches[0];
-        draggedItem.style.left = `${touchLocation.pageX}px`;
-        draggedItem.style.top = `${touchLocation.pageY}px`;
+        draggedItem.style.left = `${touchLocation.pageX - draggedItem.offsetWidth / 2}px`;
+        draggedItem.style.top = `${touchLocation.pageY - draggedItem.offsetHeight / 2}px`;
     }
 
     function handleTouchEnd(e) {
         const dropTarget = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
         if (dropTarget && dropTarget.classList.contains('grid-cell')) {
             dropTarget.appendChild(draggedItem);
+            draggedItem.style.position = 'absolute';
+            draggedItem.style.left = '0';
+            draggedItem.style.top = '0';
             checkPlacement(dropTarget, draggedItem.id);
         }
-        draggedItem.style.display = 'block';
+        draggedItem.style.zIndex = ''; // 드래그가 끝나면 z-index를 초기화
         draggedItem = null;
     }
 
@@ -181,9 +186,21 @@ document.addEventListener('DOMContentLoaded', function() {
             const droppedElement = document.getElementById(droppedItemId);
             if (droppedElement) {
                 this.appendChild(droppedElement); // 타겟 셀에 드래그된 아이템을 추가
-                droppedElement.style.display = 'block'; // 드롭된 후 아이템을 보이게 설정
+                droppedElement.style.visibility = 'visible'; // 드롭된 후 아이템을 보이게 설정
+                
+                // 모바일 환경에서도 이미지가 제대로 보이도록 강제로 렌더링
+                setTimeout(() => {
+                    if (droppedElement) {
+                        droppedElement.style.visibility = 'visible';
+                    }
+                }, 0);
+                
                 checkPlacement(this, droppedItemId); // 위치 및 도형 확인
+            } else {
+                console.error("Dropped element not found:", droppedItemId);
             }
+        } else {
+            console.error("No dropped item ID found.");
         }
     }
 
