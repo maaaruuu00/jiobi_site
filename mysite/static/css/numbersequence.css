@@ -1,5 +1,8 @@
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .container {
@@ -14,36 +17,42 @@ body {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .score, .timer {
     font-size: 1.5rem;
+    flex-basis: 100%;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .game-instruction {
-    font-size: 1.2rem;
+    font-size: 4vw; /* 화면 크기에 따라 텍스트 크기 조정 */
     color: #333;
     text-align: center;
-    margin-bottom: 30px;  /* game-instruction과 game-board 사이의 간격을 30px로 설정 */
+    margin-bottom: 30px;
 }
 
 .game-board {
     display: grid;
     grid-gap: 10px;
     margin-bottom: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* 숫자칸을 원래대로 복원 */
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    max-width: 100%;
 }
 
 .grid-item {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
-    font-size: 2rem;
+    font-size: 5vw; /* 숫자 크기를 화면 크기에 맞춰 조정 */
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     color: black;
-    height: 100px; /* 고정된 높이 */
+    height: 100px;
+    box-sizing: border-box;
 }
 
 .grid-item.correct {
@@ -56,44 +65,48 @@ body {
 
 .game-over-container {
     display: flex;
-    flex-direction: column;  /* 메시지와 버튼들을 수직으로 정렬 */
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;  /* 요소들 사이의 간격을 좁혀 header 아래로 붙입니다 */
-    width: 100%;  /* 컨테이너 너비를 100%로 설정 */
+    gap: 10px;
+    width: 100%;
 }
 
 .game-over-message {
-    font-size: 1.5rem;
+    font-size: 4vw; /* 메시지 크기를 화면 크기에 맞춰 조정 */
     color: red;
     text-align: center;
-    white-space: nowrap;  /* 메시지를 한 줄로 표시 */
+    white-space: nowrap;
 }
 
 .button-container {
     display: flex;
-    gap: 20px;  /* 버튼들 사이의 간격 */
+    gap: 20px;
     justify-content: center;
 }
 
 .large-button {
-    font-size: 1.5rem;  /* 버튼의 크기를 키웁니다 */
+    font-size: 4vw; /* 버튼의 텍스트 크기를 화면 크기에 맞춰 조정 */
     padding: 10px 20px;
 }
 
 /* 모바일 및 태블릿 크기에 맞춰 스타일 조정 */
 @media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
     .grid-item {
-        font-size: 1.5rem;
-        height: 70px;  /* 모바일 화면에서 숫자칸 높이를 조정 */
+        font-size: 6vw; /* 모바일 화면에서 숫자 크기를 더 크게 조정 */
+        height: 70px;
     }
 
     .large-button {
-        font-size: 1.2rem;  /* 모바일 화면에서 버튼 크기 조정 */
+        font-size: 4.5vw; /* 모바일 화면에서 버튼 크기 조정 */
         padding: 8px 16px;
     }
 
     .game-over-message {
-        font-size: 1.2rem;  /* 모바일 화면에서 메시지 크기 조정 */
+        font-size: 4.5vw; /* 모바일 화면에서 메시지 크기 조정 */
     }
 }

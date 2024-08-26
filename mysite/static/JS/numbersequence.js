@@ -62,11 +62,15 @@ function createBoard(level) {
 
         // 마우스 클릭과 터치 이벤트 모두를 지원
         gridItem.addEventListener('click', () => handleNumberClick(number, gridItem));
-        gridItem.addEventListener('touchstart', () => handleNumberClick(number, gridItem));
+        gridItem.addEventListener('touchstart', (event) => {
+            event.preventDefault(); // 터치 이벤트 중복 방지
+            handleNumberClick(number, gridItem);
+        });
 
         board.appendChild(gridItem);
     });
 }
+
 
 function handleNumberClick(number, element) {
     const nextNumber = userSequence.length + 1;
@@ -137,7 +141,10 @@ function showGameOverMessage(message) {
     restartButton.textContent = '다시 시작';
     restartButton.classList.add('btn', 'btn-primary', 'large-button');
     restartButton.addEventListener('click', initGame);
-    restartButton.addEventListener('touchstart', initGame);  // 터치 지원
+    restartButton.addEventListener('touchstart', (event) => {
+        event.preventDefault(); // 터치 이벤트 중복 방지
+        initGame();
+    });
 
     // 종료 버튼 생성
     const endButton = document.createElement('button');
@@ -147,8 +154,9 @@ function showGameOverMessage(message) {
     endButton.addEventListener('click', () => {
         document.getElementById('hidden-game-link').click();
     });
-    endButton.addEventListener('touchstart', () => {
-        document.getElementById('hidden-game-link').click();  // 터치 지원
+    endButton.addEventListener('touchstart', (event) => {
+        event.preventDefault(); // 터치 이벤트 중복 방지
+        document.getElementById('hidden-game-link').click();
     });
 
     // 버튼들을 컨테이너에 추가
