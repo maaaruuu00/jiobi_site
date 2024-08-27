@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'reactiontime_app',
     'locationmemory_app',
     'numbersequence_app',
+    'flashtrack_app',
 ]
 
 MIDDLEWARE = [
