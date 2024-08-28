@@ -1,17 +1,19 @@
-// flashtrack.js
+// FlashTrack.js
 
 // 게임 상태 변수
 let sequence = [];  // 올바른 시퀀스를 저장
 let playerSequence = [];  // 플레이어가 입력한 시퀀스를 저장
 let score = 0;  // 현재 점수
 let activeButtons = 3;  // 초기 활성화된 버튼 수
+let startTime;  // 시퀀스 시작 시간
+let currentStep = 0;  // 현재 시퀀스의 단계
 
 // 게임 초기화
 document.addEventListener("DOMContentLoaded", function() {
     startNewGame();
     
     // 각 버튼에 이벤트 리스너 추가
-    document.querySelectorAll(".game-button").forEach(button => {
+    document.querySelectorAll(".quarter-button").forEach(button => {
         button.addEventListener("click", handleButtonClick);
         button.addEventListener("touchstart", handleButtonClick);
     });
@@ -27,61 +29,84 @@ function startNewGame() {
     playerSequence = [];
     score = 0;
     activeButtons = 3;
+    currentStep = 0;  // 시퀀스 단계를 초기화
     document.getElementById("score").innerText = score;
     document.getElementById("message-box").classList.add("hidden");
+    
+    // 초기 활성화된 버튼만 표시
+    document.querySelectorAll('.quarter-button').forEach((button, index) => {
+        if (index < activeButtons) {
+            button.classList.remove('inactive');
+        } else {
+            button.classList.add('inactive');
+        }
+    });
+
     generateSequence();
 }
 
 // 시퀀스 생성
 function generateSequence() {
-    for (let i = 0; i < activeButtons; i++) {
-        sequence.push(Math.floor(Math.random() * activeButtons) + 1);
+    sequence = [];  // 시퀀스를 초기화합니다.
+    for (let i = 0; i < activeButtons; i++) {  // activeButtons 수 만큼 시퀀스 생성
+        let randomButton = Math.floor(Math.random() * activeButtons) + 1;
+        sequence.push(randomButton);
     }
+    console.log('Generated sequence:', sequence);  // 디버깅을 위해 시퀀스를 콘솔에 출력
     playSequence();
 }
 
 // 시퀀스 재생
 function playSequence() {
     let i = 0;
+    startTime = performance.now();
     const interval = setInterval(() => {
-        const buttonId = `btn-${sequence[i]}`;
-        const button = document.getElementById(buttonId);
-        flashButton(button);
-        i++;
-        if (i >= sequence.length) {
+        if (i < sequence.length) {
+            const buttonId = `inner-btn-${sequence[i]}`; // 안쪽 버튼만 재생
+            const button = document.getElementById(buttonId);
+            flashButton(button);
+            i++;
+        } else {
             clearInterval(interval);
+            playerSequence = [];  // 플레이어 입력 초기화
+            currentStep = 0;  // 시퀀스의 단계 초기화
         }
-    }, 500);
+    }, 1000);  // 1초 간격으로 깜빡입니다.
 }
 
 // 버튼 깜빡임
 function flashButton(button) {
-    button.style.transform = "scale(1.2)";
+    if (!button) return;  // 버튼이 null인 경우 함수를 종료
+    const originalColor = button.style.backgroundColor;
+    button.style.opacity = "0.1"; // 거의 투명하게
+    button.style.backgroundColor = "#ffffff"; // 배경색을 하얗게 변경
     setTimeout(() => {
-        button.style.transform = "scale(1)";
+        button.style.opacity = "1"; // 원래 상태로 복구
+        button.style.backgroundColor = originalColor; // 원래 색상 복구
     }, 300);
 }
 
 // 버튼 클릭 또는 터치 처리
 function handleButtonClick(event) {
     const buttonId = event.target.id;
-    const buttonNumber = parseInt(buttonId.split("-")[1]);
+    const buttonNumber = parseInt(buttonId.split("-")[2]);  // 'inner-btn-1'에서 숫자만 추출
     playerSequence.push(buttonNumber);
     checkPlayerInput();
 }
 
 // 플레이어 입력 검증
 function checkPlayerInput() {
-    const currentStep = playerSequence.length - 1;
     if (playerSequence[currentStep] !== sequence[currentStep]) {
         endGame();
         return;
     }
 
-    if (playerSequence.length === sequence.length) {
+    currentStep++;  // 단계 증가
+
+    if (currentStep === sequence.length) {
         score += calculateScore();
         document.getElementById("score").innerText = score;
-        if (playerSequence.length === activeButtons) {
+        if (activeButtons === currentStep) {
             playerSequence = [];
             activeButtons++;
             if (activeButtons > 8) {
@@ -117,4 +142,3 @@ function exitGame() {
     var exitUrl = document.getElementById("exit-link").href;
     window.location.href = exitUrl;  // 동적으로 생성된 URL로 리디렉션
 }
-
