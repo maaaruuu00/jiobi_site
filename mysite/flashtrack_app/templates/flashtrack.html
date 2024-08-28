@@ -1,45 +1,59 @@
 {% extends "base.html" %}
-{% load static %}
 
-<head>
-    <link rel="stylesheet" href="{% static 'css/flashtrack.css' %}"> <!-- CSS 파일 연결 -->
-</head>
+{% block title %}
+FlashTrack
+{% endblock %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/flashtrack.css' %}" />
+{% endblock %}
 
 {% block content %}
 <div id="game-container" class="game-wrapper">
-    <!-- 게임 타이틀 -->
-    <h1 class="game-title">FlashTrack</h1>
-    
-    <!-- 게임 화면 -->
-    <div id="button-grid" class="grid">
-        <!-- 안쪽 원 -->
-        <button id="btn-1" class="game-button"></button>
-        <button id="btn-2" class="game-button"></button>
-        <button id="btn-3" class="game-button"></button>
-        <button id="btn-4" class="game-button inactive"></button>
-        
-        <!-- 바깥쪽 원 -->
-        <button id="btn-5" class="game-button inactive"></button>
-        <button id="btn-6" class="game-button inactive"></button>
-        <button id="btn-7" class="game-button inactive"></button>
-        <button id="btn-8" class="game-button inactive"></button>
-    </div>
-    
-    <!-- 점수 및 상태 표시 -->
-    <div id="scoreboard" class="score-display">
-        <p>Score: <span id="score">0</span></p>
-    </div>
+  <!-- 게임 타이틀 -->
+  <h1 class="game-title">FlashTrack</h1>
+
+  <!-- 점수 및 상태 표시 -->
+  <div id="scoreboard" class="score-display">
+    <p>Score: <span id="score">0</span></p>
+  </div>
+
+  <!-- 게임 화면 -->
+  <div id="button-grid" class="grid">
+    <!-- 바깥쪽 도넛 버튼들 -->
+    <button id="outer-btn-1" class="quarter-button"></button>
+    <button id="outer-btn-2" class="quarter-button"></button>
+    <button id="outer-btn-3" class="quarter-button"></button>
+    <button id="outer-btn-4" class="quarter-button"></button>
+
+    <!-- 바깥쪽 하얀 간격 원 -->
+    <div class="outer-overlay"></div>
+
+    <!-- 안쪽 도넛 버튼들 -->
+    <button id="inner-btn-1" class="quarter-button inner-button"></button>
+    <button id="inner-btn-2" class="quarter-button inner-button"></button>
+    <button id="inner-btn-3" class="quarter-button inner-button"></button>
+    <button id="inner-btn-4" class="quarter-button inner-button"></button>
+
+    <!-- 안쪽 하얀 간격 원 -->
+    <div class="inner-overlay"></div>
+  </div>
+
 </div>
 
 <!-- 메시지 창 -->
 <div id="message-box" class="hidden">
-    <p id="message-text">게임이 끝났습니다.</p>
-    <button id="restart-btn">다시 하기</button>
-    <button id="exit-btn">종료</button>
+  <p id="message-text">게임이 끝났습니다.</p>
+  <button id="restart-btn">다시 하기</button>
+  <button id="exit-btn">종료</button>
 </div>
 
-<a id="exit-link" href="{% url 'game' %}" style="display:none;"></a>
-
-<script src="{% static 'JS/flashtrack.js' %}"></script>
-
+<a id="exit-link" href="{% url 'game' %}" style="display: none"></a>
 {% endblock %}
+
+{% block javascript %}
+<script src="{% static 'JS/flashtrack.js' %}"></script>
+{% endblock %}
+
+
