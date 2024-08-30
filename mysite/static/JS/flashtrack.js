@@ -10,6 +10,9 @@ let currentRound = 0;  // 현재 라운드 번호
 const colors = ["#FF6347", "#FFA500", "#FFFF00", "#008000", "#00FFFF", "#0000FF", "#800080", "#FFC0CB"];
 let buttonMapping = [];  // 버튼 ID와 색상 매핑
 
+let b = activeButtons;  // 현재 시퀀스의 길이 (a 값과 동일하게 시작)
+let c = 1;  // 현재 게임 단계
+
 // 게임 초기화
 document.addEventListener("DOMContentLoaded", function() {
     startNewGame();
@@ -31,7 +34,8 @@ function startNewGame() {
     playerSequence = [];
     score = 0;
     activeButtons = 3;
-    currentRound = 1;  // 라운드를 1로 초기화
+    b = activeButtons;  // 시퀀스 길이 초기화
+    c = 1;  // 라운드를 1로 초기화
     buttonMapping = [];  // 매핑 초기화
     document.getElementById("score").innerText = score;
     document.getElementById("message-box").classList.add("hidden");
@@ -39,7 +43,7 @@ function startNewGame() {
     // 버튼 색상 매핑 및 초기화
     setupButtonColors();
 
-    showStageMessage(currentRound);  // 첫 라운드 메시지 표시
+    showStageMessage(c);  // 첫 라운드 메시지 표시
     setTimeout(generateSequence, 1000); // 1초 후에 첫 시퀀스 시작
 }
 
@@ -79,9 +83,10 @@ function setupButtonColors() {
     }
 }
 
+
 // 시퀀스 생성
 function generateSequence() {
-    const numberOfFlashes = activeButtons + (currentRound - 1);  // 단계에 따른 깜빡임 횟수 결정
+    const numberOfFlashes = b;  // 현재 시퀀스 길이 b를 사용
     sequence = [];
     for (let i = 0; i < numberOfFlashes; i++) {
         sequence.push(Math.floor(Math.random() * activeButtons) + 1);
@@ -89,6 +94,7 @@ function generateSequence() {
     console.log("Generated sequence:", sequence);
     playSequence();
 }
+
 
 // 시퀀스 재생
 function playSequence() {
@@ -145,31 +151,58 @@ function checkPlayerInput() {
         score += calculateScore();
         document.getElementById("score").innerText = score;
 
-        if (currentRound === (activeButtons + 2)) {  // 현재 라운드가 색상 수 + 2와 동일하면 다음 색상으로 이동
-            activeButtons++;
-            currentRound = 1;
-            if (activeButtons > 8) {
-                showEndMessage("게임에 성공하셨습니다. 축하합니다. 당신의 최종 점수는 " + score + "점입니다.");
-            } else {
-                showStageMessage(currentRound + (activeButtons - 3) * 4);  // 단계 메시지 표시
-                setupButtonColors();  // 색상 추가 및 재배치
-                setTimeout(generateSequence, 1000);  // 1초 후에 시퀀스 생성 시작
-            }
-        } else {
-            currentRound++;
-            showStageMessage(currentRound + (activeButtons - 3) * 4);  // 단계 메시지 표시
-            setTimeout(generateSequence, 1000);  // 1초 후에 시퀀스 생성 시작
+        b++;  // 시퀀스 길이 증가
+        if (b > activeButtons * 2) {  // 시퀀스 길이가 버튼 수의 2배보다 크면
+            activeButtons++;  // 활성화된 색상 수 증가
+            b = activeButtons; // 시퀀스 길이를 새로운 활성화된 버튼 수로 초기화
+            setupButtonColors();  // 새로운 색상 추가 및 배치
         }
+
+        showStageMessage(c);  // 단계 메시지 표시
+        c++;  // 단계 증가
+        setTimeout(generateSequence, 1000);  // 1초 후에 시퀀스 생성 시작
     }
 }
 
-// 점수 계산
+
+
+// 점수 계산 및 애니메이션 적용
 function calculateScore() {
     const timeTaken = performance.now() - startTime;
-    const baseScore = activeButtons * 50;  // 기본 점수
-    const timeBonus = Math.max(0, (1000 - timeTaken) / 10);  // 시간 보너스 (시간이 적을수록 보너스가 큼)
-    return Math.round(baseScore + timeBonus);
+    const baseScore = b * activeButtons * 10;  // 시퀀스 길이(b)와 활성화된 색상 수(activeButtons)를 고려한 기본 점수
+    const timeBonus = Math.max(0, (1000 / timeTaken) * 50);  // 시간 보너스
+    const newScore = Math.round(baseScore + timeBonus);
+
+    // 점수 애니메이션 메시지 생성
+    const scoreMessage = document.createElement("div");
+    scoreMessage.classList.add("score-message");
+    scoreMessage.innerText = `기본 점수 : ${baseScore} + 보너스 점수 : ${Math.round(timeBonus)}`;
+
+    // 메시지를 화면에 추가
+    const gridElement = document.querySelector('.grid');
+    gridElement.appendChild(scoreMessage);
+
+    // 1초 후 메시지를 제거하고 점수를 업데이트
+    setTimeout(() => {
+        scoreMessage.remove();
+
+        // 점수 애니메이션 적용
+        const scoreElement = document.getElementById("score");
+        const currentScore = parseInt(scoreElement.innerText, 10);  // 현재 점수를 정수로 변환
+        scoreElement.innerText = currentScore + newScore; // 점수 갱신
+        scoreElement.style.animation = "scoreAnimation 0.5s ease-in-out";
+
+        // 애니메이션 초기화 (다시 사용할 수 있게)
+        scoreElement.addEventListener("animationend", function() {
+            scoreElement.style.animation = "";
+        });
+
+    }, 1000);  // 1초 동안 메시지를 표시한 후 삭제
+
+    return newScore;
 }
+
+
 
 // 게임 종료
 function endGame() {
