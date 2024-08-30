@@ -235,3 +235,47 @@ body {
     padding: 10px;
   }
 }
+
+
+@keyframes scoreAnimation {
+  0% {
+      transform: scale(1);
+      color: #333;
+  }
+  50% {
+      transform: scale(1.5);
+      color: #FFD700; /* 점수가 올라갈 때 색상을 변경 */
+  }
+  100% {
+      transform: scale(1);
+      color: #333;
+  }
+  from { transform: scale(1); }
+  to { transform: scale(1.2); }
+}
+
+.score-display span {
+  display: inline-block;
+  transition: transform 0.5s ease-in-out;
+}
+
+.score-message {
+  position: absolute;
+  top: calc(50% + 30px);  /* 점수 위치에서 10px 더 아래로 설정 */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1.2em;
+  opacity: 0;
+  animation: fadeInOut 1s forwards;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
