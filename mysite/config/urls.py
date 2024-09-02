@@ -32,4 +32,5 @@ urlpatterns = [
     path('numbersequence/', include('numbersequence_app.urls')),
     path('flashtrack/', include('flashtrack_app.urls')),  # flashtrack_app URL 연결
     path('game/', game_view, name='game'),  # game.html로 연결되는 경로 추가
+    path('oxquiz/', include('oxquiz.urls')),
 ]

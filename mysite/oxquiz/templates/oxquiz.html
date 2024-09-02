@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+OX 퀴즈
+{% endblock %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/oxquiz.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="quiz-container">
+    <div class="quiz-header">
+        <div class="timer">
+            <span id="time-left">60</span> 초 남음
+        </div>
+        <div class="score">
+            점수: <span id="score">0</span>
+        </div>
+    </div>
+    <div class="quiz-body">
+        <div id="question-box">
+            <p id="question-text">게임 시작 버튼을 누르세요!</p>
+        </div>
+    </div>
+    <div class="quiz-footer">
+        <button id="true-btn" class="answer-btn" onclick="answer(true)" disabled>O</button>
+        <button id="false-btn" class="answer-btn" onclick="answer(false)" disabled>X</button>
+    </div>
+</div>
+
+<div id="message-box" class="hidden">
+    <p id="message-text">게임이 끝났습니다.</p>
+    <button id="restart-btn">다시 하기</button>
+    <button id="exit-btn">종료</button>
+</div>
+
+<a id="exit-link" href="{% url 'game' %}" style="display: none"></a>
+
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'JS/oxquiz.js' %}"></script>
+{% endblock %}

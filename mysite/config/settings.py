@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'locationmemory_app',
     'numbersequence_app',
     'flashtrack_app',
+    'oxquiz',
 ]
 
 MIDDLEWARE = [

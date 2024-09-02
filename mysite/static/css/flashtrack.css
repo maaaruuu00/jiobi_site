@@ -1,121 +1,281 @@
-/* 기본적인 리셋 스타일 */
-body, h1, p, button {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+/* 전체 레이아웃 */
+body,
+h1,
+p,
+button {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
 }
 
 .game-wrapper {
-    text-align: center;
+  text-align: center;
 }
 
 .game-title {
-    font-size: 2em;
-    margin-bottom: 20px;
-}
-
-.grid {
-    position: relative;
-    width: 300px;
-    height: 300px;
-    margin: 0 auto;
-}
-
-/* 버튼 기본 스타일 */
-.game-button {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: transform 0.1s ease-in-out;
-}
-
-/* 안쪽 원 버튼 배치 */
-#btn-1 { top: 50%; left: 50%; transform: translate(-150%, -150%); background-color: #ff6666; }  /* 왼쪽 위 */
-#btn-2 { top: 50%; left: 50%; transform: translate(50%, -150%); background-color: #66b3ff; }  /* 오른쪽 위 */
-#btn-3 { top: 50%; left: 50%; transform: translate(-150%, 50%); background-color: #99ff99; }  /* 왼쪽 아래 */
-#btn-4 { top: 50%; left: 50%; transform: translate(50%, 50%); background-color: #ffff66; }  /* 오른쪽 아래 */
-
-/* 바깥쪽 원 버튼 배치 */
-#btn-5 { top: 0%; left: 50%; transform: translate(-50%, 0); background-color: #ff9966; }  /* 위쪽 중앙 */
-#btn-6 { top: 50%; right: 0%; transform: translate(0, -50%); background-color: #c266ff; }  /* 오른쪽 중앙 */
-#btn-7 { bottom: 0%; left: 50%; transform: translate(-50%, 0); background-color: #ff99cc; }  /* 아래쪽 중앙 */
-#btn-8 { top: 50%; left: 0%; transform: translate(0, -50%); background-color: #66ffff; }  /* 왼쪽 중앙 */
-
-/* 비활성화된 버튼 스타일 */
-.inactive {
-    background-color: #e0e0e0;
-    cursor: not-allowed;
+  font-size: 2em;
+  margin-bottom: 20px;
 }
 
 /* 점수판 스타일 */
 .score-display {
-    margin-top: 20px;
-    font-size: 1.5em;
+  margin-bottom: 20px; /* 게임 화면과 20px 간격 */
+  font-size: 1.5em;
+}
+
+/* 원형 배치 */
+.grid {
+  position: relative;
+  width: 450px;
+  height: 450px;
+  margin: 0 auto;
+}
+
+.quarter-button {
+  position: absolute;
+  border-radius: 100% 0 0 0;
+  cursor: pointer;
+  border: none;
+}
+
+.quarter-button:hover {
+  opacity: 0.8;
+}
+
+/* 바깥쪽 도넛 버튼 */
+#outer-btn-1 {
+  width: 200px;
+  height: 200px;
+  top: 0;
+  left: 0;
+  transform: rotate(0deg);
+  background-color: #FF6347; /* 빨강 */
+}
+
+#outer-btn-2 {
+  width: 200px;
+  height: 200px;
+  top: 0;
+  right: 0;
+  transform: rotate(90deg);
+  background-color: #FFA500; /* 주황 */
+}
+
+#outer-btn-3 {
+  width: 200px;
+  height: 200px;
+  bottom: 0;
+  left: 0;
+  transform: rotate(270deg);
+  background-color: #FFFF00; /* 노랑 */
+}
+
+#outer-btn-4 {
+  width: 200px;
+  height: 200px;
+  bottom: 0;
+  right: 0;
+  transform: rotate(180deg);
+  background-color: #008000; /* 초록 */
+}
+
+/* 바깥쪽 하얀 간격 원 */
+.outer-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 250px;
+  height: 250px;
+  background-color: #f4f4f4;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* 안쪽 도넛 버튼 */
+.inner-button {
+  width: 100px;
+  height: 100px;
+}
+
+#inner-btn-1 {
+  top: 125px;
+  left: 125px;
+  transform: rotate(0deg);
+  background-color: #00FFFF; /* 하늘색 */
+}
+
+#inner-btn-2 {
+  top: 125px;
+  right: 125px;
+  transform: rotate(90deg);
+  background-color: #0000FF; /* 파랑 */
+}
+
+#inner-btn-3 {
+  bottom: 125px;
+  left: 125px;
+  transform: rotate(270deg);
+  background-color: #800080; /* 보라 */
+}
+
+#inner-btn-4 {
+  bottom: 125px;
+  right: 125px;
+  transform: rotate(180deg);
+  background-color: #FFC0CB; /* 핑크 */
+}
+
+/* 안쪽 하얀 간격 원 */
+.inner-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  background-color: #f4f4f4;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* 메시지 창 스타일 */
 #message-box {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    border: 2px solid #333;
-    padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    z-index: 1000;
+  position: absolute; /* 게임 화면의 중앙으로 */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 2px solid #333;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  z-index: 1000;
 }
 
 #message-box p {
-    margin-bottom: 20px;
-    font-size: 1.2em;
+  margin-bottom: 20px;
+  font-size: 1.2em;
 }
 
 #message-box button {
-    padding: 10px 20px;
-    margin: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #333;
-    color: white;
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
 }
 
 #message-box button:hover {
-    background-color: #555;
+  background-color: #555;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
+
+.stage-message {
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 2px solid #333;
+    padding: 10px 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    z-index: 1000;
+    font-size: 2em;
+    color: #333;
+    border-radius: 10px;
+}
+
 
 /* 반응형 디자인 */
 @media (max-width: 600px) {
-    .grid {
-        width: 200px;
-        height: 200px;
-    }
+  .grid {
+    width: 300px;
+    height: 300px;
+  }
 
-    .game-button {
-        width: 60px;
-        height: 60px;
-    }
+  .quarter-button {
+    width: 150px;
+    height: 150px;
+  }
 
-    #message-box {
-        width: 90%;
-        padding: 10px;
-    }
+  .inner-button {
+    width: 75px;
+    height: 75px;
+  }
+
+  .outer-overlay {
+    width: 200px;
+    height: 200px;
+  }
+
+  .inner-overlay {
+    width: 75px;
+    height: 75px;
+  }
+
+  #message-box {
+    width: 90%;
+    padding: 10px;
+  }
+}
+
+
+@keyframes scoreAnimation {
+  0% {
+      transform: scale(1);
+      color: #333;
+  }
+  50% {
+      transform: scale(1.5);
+      color: #FFD700; /* 점수가 올라갈 때 색상을 변경 */
+  }
+  100% {
+      transform: scale(1);
+      color: #333;
+  }
+  from { transform: scale(1); }
+  to { transform: scale(1.2); }
+}
+
+.score-display span {
+  display: inline-block;
+  transition: transform 0.5s ease-in-out;
+}
+
+.score-message {
+  position: absolute;
+  top: calc(50% + 30px);  /* 점수 위치에서 10px 더 아래로 설정 */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1.2em;
+  opacity: 0;
+  animation: fadeInOut 1s forwards;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
 }
