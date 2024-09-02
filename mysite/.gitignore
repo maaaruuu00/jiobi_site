@@ -1,2 +1,5 @@
 *.pyc
 __pycache__/
+
+# Ignore Python virtual environment directory
+myenv/
