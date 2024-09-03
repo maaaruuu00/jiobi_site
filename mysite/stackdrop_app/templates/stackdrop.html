@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+Stack Drop
+{% endblock %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/stackdrop.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div id="game-container">
+    <!-- 상단에 점수와 남은 시간 표시 -->
+    <div id="header">
+        <div id="score">Score: 0</div>
+        <div id="time-left">60</div>
+    </div>
+    
+    <!-- 게임 영역: 사각형이 움직이고 쌓이는 부분 -->
+    <div id="game-area">
+        <div id="falling-rectangle"></div>
+        <div id="stacked-rectangles"></div>
+    </div>
+    
+    <!-- 하단에 "쌓기" 버튼 -->
+    <div id="footer">
+        <button id="drop-button">쌓기</button>
+    </div>
+</div>
+
+<!-- 메시지 창 -->
+<div id="message-box" class="hidden">
+    <p id="message-text">게임이 끝났습니다.</p>
+    <button id="restart-btn">다시 하기</button>
+    <button id="exit-btn">종료</button>
+</div>
+
+<a id="exit-link" href="{% url 'game' %}" style="display: none"></a>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'JS/stackdrop.js' %}"></script>
+{% endblock %}

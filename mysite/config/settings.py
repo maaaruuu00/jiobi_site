@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'numbersequence_app',
     'flashtrack_app',
     'oxquiz',
+    'stackdrop_app',
 ]
 
 MIDDLEWARE = [
