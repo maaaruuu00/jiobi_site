@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}계산기{% endblock %}
+{% block title %}온라인 계산기 - 간편한 계산{% endblock %}
 
 {% block css %}
 {% load static %}
@@ -14,23 +14,26 @@
         <input type="text" id="output-screen" readonly>
     </div>
     <div class="buttons">
-        <button class="button" onclick="clearOutput()">C</button>
-        <button class="button" onclick="appendToOutput('7')">7</button>
-        <button class="button" onclick="appendToOutput('8')">8</button>
-        <button class="button" onclick="appendToOutput('9')">9</button>
-        <button class="button" onclick="appendToOutput('+')">+</button>
-        <button class="button" onclick="appendToOutput('4')">4</button>
-        <button class="button" onclick="appendToOutput('5')">5</button>
-        <button class="button" onclick="appendToOutput('6')">6</button>
-        <button class="button" onclick="appendToOutput('-')">-</button>
-        <button class="button" onclick="appendToOutput('1')">1</button>
-        <button class="button" onclick="appendToOutput('2')">2</button>
-        <button class="button" onclick="appendToOutput('3')">3</button>
-        <button class="button" onclick="appendToOutput('*')">*</button>
-        <button class="button" onclick="appendToOutput('0')">0</button>
-        <button class="button" onclick="appendToOutput('.')">.</button>
-        <button class="button" onclick="calculate()">=</button>
-        <button class="button" onclick="appendToOutput('/')">/</button>
+        <button class="button parenthesis-open">(</button>
+        <button class="button parenthesis-close">)</button>
+        <button class="button percent">%</button>
+        <button class="button clear">C</button>
+        <button class="button seven">7</button>
+        <button class="button eight">8</button>
+        <button class="button nine">9</button>
+        <button class="button plus">+</button>
+        <button class="button four">4</button>
+        <button class="button five">5</button>
+        <button class="button six">6</button>
+        <button class="button multiply">*</button>
+        <button class="button one">1</button>
+        <button class="button two">2</button>
+        <button class="button three">3</button>
+        <button class="button minus">-</button>
+        <button class="button zero">0</button>
+        <button class="button dot">.</button>
+        <button class="button equals">=</button>
+        <button class="button plus">+</button>
     </div>
     <div class="advanced-buttons">
         <!--<button class="advanced-button" onclick="toggleAdvancedMode()">공학용</button>-->
@@ -47,5 +50,11 @@
     </div>
 </div>
 
+
 <script src="static/JS/calculator.js"></script>
+{% endblock %}
+
+{% block extra_head %}
+<meta name="description" content="온라인 계산기로 간편하게 다양한 수학 계산을 해보세요. 기본 계산기부터 고급 기능까지 지원합니다.">
+<meta name="keywords" content="온라인 계산기, 계산기, 수학 계산, 기본 계산기, 고급 계산기, 계산기 앱">
 {% endblock %}

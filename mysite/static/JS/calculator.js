@@ -1,5 +1,4 @@
 let output = ''; // 계산 결과를 저장할 변수
-let advancedMode = false; // 공학용 모드 여부를 저장할 변수
 
 // 숫자 및 연산자 버튼 클릭 시 호출되는 함수
 function appendToOutput(value) {
@@ -12,6 +11,8 @@ function calculate() {
     try {
         // JavaScript의 eval 함수를 사용하여 결과 계산
         output = eval(output);
+        // 결과를 소수점 2자리까지 반올림 후 문자열로 변환
+        output = parseFloat(output.toFixed(2));
         updateOutputScreen();
     } catch (error) {
         // 연산 오류 발생 시 에러 메시지 출력
@@ -30,6 +31,21 @@ function clearOutput() {
 function updateOutputScreen() {
     document.getElementById('output-screen').value = output;
 }
+
+// 버튼 클릭 이벤트 설정
+document.querySelectorAll('.button').forEach(button => {
+    button.addEventListener('click', () => {
+        const buttonText = button.textContent;
+
+        if (buttonText === 'C') {
+            clearOutput();
+        } else if (buttonText === '=') {
+            calculate();
+        } else {
+            appendToOutput(buttonText);
+        }
+    });
+});
 
 // 공학용 버튼 클릭 시 호출되는 함수
 function toggleAdvancedMode() {
@@ -68,7 +84,7 @@ document.addEventListener("keydown", function(event) {
     }
 
     // 숫자나 연산자 키를 누르면 결과에 해당 키를 추가
-    if ((/\d/).test(key) || "+-*/.".includes(key)) {
+    if ((/\d/).test(key) || "+-*/%()".includes(key)) {
         appendToOutput(key);
     }
 });
@@ -86,7 +102,9 @@ document.getElementById("historyButton").addEventListener("click", () => {
         calculations.forEach((calculation, index) => {
             const p = document.createElement("p");
             const result = eval(calculation);
-            p.textContent = `${index + 1}. ${calculation} = ${result}`; // 결과값 추가
+            // 결과를 소수점 2자리까지 반올림
+            const roundedResult = parseFloat(result.toFixed(2));
+            p.textContent = `${index + 1}. ${calculation} = ${roundedResult}`; // 결과값 추가
             historyContent.appendChild(p);
         });
     }
@@ -105,8 +123,13 @@ function calculate() {
     const calculation = outputScreen.value;
     if (calculation !== "") {
         recordCalculation(calculation);
-        const result = eval(calculation); // 계산 수행
-        outputScreen.value = result;
+        try {
+            const result = eval(calculation); // 계산 수행
+            // 결과를 소수점 2자리까지 반올림
+            outputScreen.value = parseFloat(result.toFixed(2));
+        } catch (e) {
+            outputScreen.value = 'Error';
+        }
     }
 }
 
