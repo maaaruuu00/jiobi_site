@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+Stack Drop
+{% endblock %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/stackdrop.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div id="game-container">
+    <!-- 게임 영역 -->
+    <div id="game-area">
+        <div id="falling-rectangle"></div> <!-- 상단 중앙에 블록 -->
+        <div id="stacked-rectangles"></div> <!-- 하단에 블록을 쌓을 공간 -->
+    </div>
+    
+    <!-- 하단에 "쌓기" 버튼 -->
+    <div id="footer">
+        <button id="drop-button">쌓기</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'JS/stackdrop.js' %}"></script>
+{% endblock %}
