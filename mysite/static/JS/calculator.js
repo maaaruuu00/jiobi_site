@@ -27,6 +27,12 @@ function clearOutput() {
     updateOutputScreen();
 }
 
+// 백스페이스 (←) 버튼 클릭 시 호출되는 함수
+function backspace() {
+    output = output.slice(0, -1); // 결과의 마지막 문자 삭제
+    updateOutputScreen();
+}
+
 // 결과를 화면에 출력하는 함수
 function updateOutputScreen() {
     document.getElementById('output-screen').value = output;
@@ -39,6 +45,8 @@ document.querySelectorAll('.button').forEach(button => {
 
         if (buttonText === 'C') {
             clearOutput();
+        } else if (buttonText === '←') {
+            backspace();
         } else if (buttonText === '=') {
             calculate();
         } else {
@@ -74,8 +82,7 @@ document.addEventListener("keydown", function(event) {
 
     // 백스페이스 키를 누르면 화면에서 마지막 문자 삭제
     if (key === "Backspace") {
-        output = output.slice(0, -1); // 결과의 마지막 문자 삭제
-        updateOutputScreen();
+        backspace();
     }
 
     // 엔터 키를 누르면 결과를 계산
