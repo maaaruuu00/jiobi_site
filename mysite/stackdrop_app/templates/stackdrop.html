@@ -27,6 +27,15 @@ Stack Drop
         <button id="drop-button">쌓기</button>
     </div>
 </div>
+
+<!-- 표준 종료 메시지 창 -->
+<div id="standard-message-box" class="hidden">
+    <button id="standard-restart-btn">다시 하기</button>
+    <button id="standard-exit-btn">종료</button>
+</div>
+    
+<!-- 종료 버튼 클릭 시 이동할 페이지 설정 -->
+<a id="standard-exit-link" href="#" style="display: none"></a>
 {% endblock %}
 
 {% block javascript %}

@@ -78,3 +78,42 @@
     flex: 1;
     text-align: center;
 }
+
+
+/* 표준 종료 메시지 박스 스타일 시작 */
+#standard-message-box {
+    position: absolute; /* relative가 아니라 game-area 내에서 absolute로 위치 */
+    top: 50%;  /* 게임 영역 기준으로 중앙 */
+    left: 50%;
+    transform: translate(-50%, -50%); /* 정확히 중앙에 위치 */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    z-index: 1000; /* 메시지 창이 다른 요소보다 위에 뜨도록 설정 */
+    display: none; /* 기본적으로 안 보이도록 설정 */
+}
+    
+#standard-message-box p {
+    margin: 10px 0; /* 메시지와 점수에 적절한 여백 추가 */
+}
+
+#button-container {
+    display: flex;
+    justify-content: center; /* 버튼들을 가로로 가운데 정렬 */
+    margin-top: 20px; /* 버튼 위쪽에 공간 추가 */
+}
+
+#button-container button {
+    margin: 0 10px; /* 버튼 간의 간격 설정 */
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+    
+.hidden {
+    display: none; /* hidden 클래스에 대해 여전히 적용 */
+}
+
+/* 표준 종료 메시지 박스 스타일 종료 */

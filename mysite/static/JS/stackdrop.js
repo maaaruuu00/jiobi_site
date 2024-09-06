@@ -15,6 +15,64 @@ const blockHeight = 30; // 블럭의 높이를 설정합니다.
 const maxStackedBlocks = 3; // 최대 쌓일 블럭 수
 const topOffset = gameAreaHeight * 0.003; // 높이에 따라 동적으로 topOffset 설정 (예: 높이의 0.3%)
 
+/* 표준 종료 메시지 박스 js 시작 */
+// 표준 종료 메시지 표시 함수
+function showStandardEndMessage(score, exitUrl = '#') {
+    const messageBox = document.getElementById('standard-message-box');
+    const restartBtn = document.getElementById('standard-restart-btn');
+    const exitBtn = document.getElementById('standard-exit-btn');
+    const exitLink = document.getElementById('standard-exit-link');
+
+    // 게임 영역 내에서 메시지 박스가 중앙에 위치하도록 설정
+    const gameArea = document.getElementById('game-area');
+    messageBox.style.position = 'absolute'; // game-area 기준
+    messageBox.style.top = '50%';
+    messageBox.style.left = '50%';
+    messageBox.style.transform = 'translate(-50%, -50%)';
+
+    // DOM 요소가 모두 존재하는지 확인
+    if (!messageBox || !restartBtn || !exitBtn || !exitLink) {
+        console.error("필수 DOM 요소가 누락되었습니다.");
+        return; // 필수 요소가 없으면 함수 실행 중단
+    }
+
+    // 게임 종료 메시지와 점수 표시를 위한 <p> 요소 생성
+    const messageTextElement = document.createElement('p');
+    messageTextElement.textContent = `게임이 끝났습니다.`;
+    
+    const scoreTextElement = document.createElement('p');
+    scoreTextElement.textContent = `최종 점수는 ${score}점입니다.`;
+
+    // 버튼들을 감싸는 컨테이너 추가
+    const buttonContainer = document.createElement('div');
+    buttonContainer.id = 'button-container';
+    buttonContainer.appendChild(restartBtn);
+    buttonContainer.appendChild(exitBtn);
+    
+    // 메시지와 점수 요소를 messageBox에 추가
+    messageBox.innerHTML = ''; // 기존 내용 제거
+    messageBox.appendChild(messageTextElement); // 종료 메시지 추가
+    messageBox.appendChild(scoreTextElement); // 점수 메시지 추가
+    messageBox.appendChild(buttonContainer); // 버튼 컨테이너 추가
+    
+    // 메시지 박스 화면에 표시
+    messageBox.classList.remove('hidden');
+    messageBox.style.display = 'block'; // 박스를 화면에 표시
+    
+    // 다시 하기 버튼 클릭 이벤트 설정 (페이지 새로 고침으로 재시작)
+    restartBtn.onclick = function() {
+        location.reload(); // 페이지 새로 고침으로 게임 재시작
+    };
+
+    // 종료 버튼 클릭 이벤트 설정 (game.html으로 이동)
+    exitBtn.onclick = function() {
+        exitLink.setAttribute("href", exitUrl); // 종료 시 이동할 URL 설정
+        exitLink.click(); // 링크 클릭으로 이동
+    };
+}
+/* 표준 종료 메시지 박스 js 종료 */
+
+
 // 상단 블럭을 좌우로 이동
 let movingRight = true; // 오른쪽으로 이동 중인지 여부
 const moveSpeed = 5; // 블럭이 이동하는 속도
@@ -132,8 +190,12 @@ function createNewFallingRectangle(leftPosition) {
 // 게임 시작 시 좌우 이동 시작
 function startGame() {
     createNewFallingRectangle(gameAreaWidth / 2 - blockWidth / 2); // 상단 중앙에 첫 블럭 생성
+    dropButton.disabled = false; // 쌓기 버튼 활성화
     intervalId = setInterval(moveRectangle, 50); // 50ms마다 블럭을 이동
     timerId = setInterval(updateTimer, 1000); // 1초마다 시간 감소
+
+    // 게임 시작 시 종료 메시지 박스를 숨깁니다.
+    document.getElementById('standard-message-box').classList.add('hidden');
 
     // 최고 점수 불러오기
     const savedHighScore = localStorage.getItem('highScore');
@@ -156,7 +218,9 @@ dropButton.addEventListener('click', dropRectangle);
 function endGame() {
     clearInterval(intervalId); // 블럭 이동 중지
     clearInterval(timerId); // 타이머 중지
-    alert(`게임이 끝났습니다! 최종 점수: ${score}점`);
+    dropButton.disabled = true; // 쌓기 버튼 비활성화
+
+    showStandardEndMessage(score, "/game.html");
 
     // 최고 점수 갱신
     if (score > highScore) {
