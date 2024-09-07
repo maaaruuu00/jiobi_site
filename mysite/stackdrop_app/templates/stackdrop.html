@@ -1,43 +1,44 @@
 {% extends "base.html" %}
 
 {% block title %}
-Stack Drop
+  Stack Drop
 {% endblock %}
 
 {% block css %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/stackdrop.css' %}" />
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/stackdrop.css' %}" />
 {% endblock %}
 
 {% block content %}
-<div id="game-info">
+  <div id="game-info">
     <div id="time-left">남은 시간: 60초</div>
     <div id="current-score">현재 점수: 0점</div>
     <div id="high-score">최고 점수: 0점</div>
-</div>
+  </div>
 
-<div id="game-container">
+  <div id="game-container">
     <!-- 게임 영역 -->
     <div id="game-area">
-        <div id="stacked-rectangles"></div> <!-- 하단에 블록을 쌓을 공간 -->
+      <div id="stacked-rectangles"></div>
+      <!-- 하단에 블록을 쌓을 공간 -->
     </div>
-    
+
     <!-- 하단에 "쌓기" 버튼 -->
     <div id="footer">
-        <button id="drop-button">쌓기</button>
+      <button id="drop-button">쌓기</button>
     </div>
-</div>
+  </div>
 
-<!-- 표준 종료 메시지 창 -->
-<div id="standard-message-box" class="hidden">
+  <!-- 표준 종료 메시지 창 -->
+  <div id="standard-message-box" class="hidden">
     <button id="standard-restart-btn">다시 하기</button>
     <button id="standard-exit-btn">종료</button>
-</div>
-    
-<!-- 종료 버튼 클릭 시 이동할 페이지 설정 -->
-<a id="standard-exit-link" href="#" style="display: none"></a>
+  </div>
+
+  <!-- 종료 버튼 클릭 시 이동할 페이지 설정 -->
+  <a id="standard-exit-link" href="{% url 'game' %}" style="display: none"></a>
 {% endblock %}
 
 {% block javascript %}
-<script src="{% static 'JS/stackdrop.js' %}"></script>
+  <script src="{% static 'JS/stackdrop.js' %}"></script>
 {% endblock %}
