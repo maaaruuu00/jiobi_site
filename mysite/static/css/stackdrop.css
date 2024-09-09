@@ -26,12 +26,13 @@
 
 /* 상단 중앙에 떨어지는 사각형 */
 #falling-rectangle {
-  width: 80px;
-  height: 30px;
+  width: 8vw; /* 화면 너비의 8%로 설정 */
+  height: 4vh; /* 화면 높이의 4%로 설정 */
   position: absolute;
   top: 0;
   background-color: #3498db;
   border-radius: 5px;
+  transition: top 0.5s ease-in-out; /* 부드러운 낙하를 위한 트랜지션 */
 }
 
 /* 하단에 쌓이는 사각형 */
@@ -129,7 +130,7 @@
 /* 반응형 디자인: 모바일 및 작은 화면용 */
 @media (max-width: 768px) {
   #game-area {
-    width: 90%;
+    width: 100%;
     height: calc(90vh - 15vh - 10vh - 5vh); /* game-info(15vh), footer(10vh), 여백 5vh */
   }
 
@@ -139,6 +140,14 @@
   }
 
   #game-info {
-    font-size: 3.5vw; /* 화면 너비의 4%에 맞춰 글자 크기를 설정 */
+    font-size: 3.0vw; /* 화면 너비의 4%에 맞춰 글자 크기를 설정 */
+    font-weight: bold; /* 글자 굵게 설정 */
+  }
+
+  /* 반응형 디자인: 모바일 및 작은 화면용 */
+  #falling-rectangle {
+    width: 5vw; /* 작은 화면에서는 조금 더 큰 비율로 설정 */
+    height: 3vh;
+    transition: top 0.5s ease-in-out; /* 부드러운 낙하를 위한 트랜지션 */
   }
 }

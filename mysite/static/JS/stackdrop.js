@@ -81,13 +81,24 @@ const maxRight = gameAreaWidth - blockWidth; // 오른쪽 끝 (게임 화면 오
 
 // 남은 시간 업데이트 함수
 function updateTimer() {
-  timeLeft--;
-  document.getElementById("time-left").textContent = `남은 시간: ${timeLeft}초`;
-
-  if (timeLeft <= 0) {
-    endGame(); // 시간이 0이 되면 게임 종료
+    timeLeft--;
+    const timeElement = document.getElementById("time-left");
+  
+    // 시간이 10초 이하로 남으면 텍스트 색상 변경
+    if (timeLeft <= 10) {
+      timeElement.style.color = "red"; // 긴박한 상황을 알리는 빨간색
+      timeElement.style.fontWeight = "bold"; // 폰트 굵게
+    } else {
+      timeElement.style.color = ""; // 원래 색상으로 복귀
+      timeElement.style.fontWeight = "normal"; // 원래 폰트 굵기
+    }
+  
+    timeElement.textContent = `남은 시간: ${timeLeft}초`;
+  
+    if (timeLeft <= 0) {
+      endGame(); // 시간이 0이 되면 게임 종료
+    }
   }
-}
 
 // 게임 영역의 크기에 맞춰 최대 좌우 이동 범위를 동적으로 설정
 function updateMoveBoundaries() {
@@ -129,8 +140,7 @@ function dropRectangle() {
   const currentLeft = parseInt(fallingRectangle.style.left, 10);
 
   if (stackedRectangles.children.length > 0) {
-    const lastBlock =
-      stackedRectangles.children[stackedRectangles.children.length - 1];
+    const lastBlock = stackedRectangles.children[stackedRectangles.children.length - 1];
     const lastBlockLeft = parseInt(lastBlock.style.left, 10);
 
     // 실패 조건 확인
@@ -140,18 +150,17 @@ function dropRectangle() {
     calculateScore(currentLeft, lastBlockLeft);
   } else {
     score += 10; // 첫 블럭은 기본 점수만
-    document.getElementById(
-      "current-score"
-    ).textContent = `현재 점수: ${score}점`;
+    document.getElementById("current-score").textContent = `현재 점수: ${score}점`;
   }
 
   // 하단에 쌓인 블럭의 개수를 확인합니다.
   const stackedCount = stackedRectangles.children.length;
 
+  // 트랜지션을 추가하여 블럭이 부드럽게 떨어지도록 함
+  fallingRectangle.style.transition = 'top 0.5s ease-in-out';
+
   // 하단에 쌓일 위치를 계산하고, 오차(topOffset)를 반영하여 정확하게 쌓습니다.
-  fallingRectangle.style.top = `${
-    gameAreaHeight - (stackedCount + 1) * blockHeight - topOffset
-  }px`; // 하단에 쌓기
+  fallingRectangle.style.top = `${gameAreaHeight - (stackedCount + 1) * blockHeight - topOffset}px`; // 하단에 쌓기
 
   // 현재 블럭을 하단에 추가합니다 (stackedRectangles에 추가).
   stackedRectangles.appendChild(fallingRectangle);
@@ -223,6 +232,11 @@ function endGame() {
   clearInterval(timerId); // 타이머 중지
   dropButton.disabled = true; // 쌓기 버튼 비활성화
 
+  // 상단 블럭을 숨김
+  if (fallingRectangle) {
+    fallingRectangle.style.display = 'none'; // 블럭을 화면에서 숨김
+  }
+
   showStandardEndMessage(score, "/game.html");
 
   // 최고 점수 갱신
@@ -246,23 +260,35 @@ function endGame() {
 function calculateScore(currentLeft, lastBlockLeft) {
   const difference = Math.abs(currentLeft - lastBlockLeft);
   const overlapPercentage = ((blockWidth - difference) / blockWidth) * 100;
-  const bonusScore = Math.round((overlapPercentage / 100) * 10); // 보너스 점수 계산
+
+  // 보너스 점수는 (overlapPercentage - 50)을 5로 나눈 값에 반올림 (최소 0점, 최대 10점)
+  let bonusScore = Math.max(0, Math.min(10, Math.floor((overlapPercentage - 50) / 5) + 1));
+
   score += 10 + bonusScore; // 기본 점수 10점 + 보너스 점수
-  document.getElementById(
-    "current-score"
-  ).textContent = `현재 점수: ${score}점`;
+  document.getElementById("current-score").textContent = `현재 점수: ${score}점`;
 }
 
 // 블럭이 실패 조건을 만족하는지 확인하는 함수
 function checkFailCondition(currentLeft, lastBlockLeft) {
-  const difference = Math.abs(currentLeft - lastBlockLeft);
-  if (difference > blockWidth / 2) {
-    // 블럭이 50% 이상 벗어나면 실패
-    fallingRectangle.style.transition =
-      "top 0.5s ease-out, transform 0.5s ease-out";
-    fallingRectangle.style.transform =
-      currentLeft < lastBlockLeft ? "rotate(-45deg)" : "rotate(45deg)";
-    fallingRectangle.style.top = `${gameAreaHeight}px`; // 게임 화면 아래로 떨어지게 설정
-    setTimeout(endGame, 500); // 500ms 후 게임 종료
+    const difference = Math.abs(currentLeft - lastBlockLeft);
+    const tolerance = 1; // 허용 범위 설정 (1px)
+  
+    if (Math.abs(difference - blockWidth) < tolerance) {
+      // 전혀 닿지 않았을 때: 수평으로 아래로 떨어지게 설정
+      fallingRectangle.style.transition = "top 1s ease-out"; // 수평으로 떨어지는 애니메이션
+      fallingRectangle.style.top = `${gameAreaHeight}px`; // 게임 화면 아래로 떨어지게 설정
+  
+      setTimeout(() => {
+        fallingRectangle.style.display = 'none'; // 블럭을 숨김
+        endGame(); // 게임 종료
+      }, 1000); // 1초 후에 실행
+  
+    } else if (difference > blockWidth / 2) {
+      // 블럭이 절반 이상 벗어났을 때: 회전하면서 떨어지게 설정
+      fallingRectangle.style.transition = "top 0.5s ease-out, transform 0.5s ease-out";
+      fallingRectangle.style.transform = currentLeft < lastBlockLeft ? "rotate(-45deg)" : "rotate(45deg)";
+      fallingRectangle.style.top = `${gameAreaHeight}px`; // 게임 화면 아래로 떨어지게 설정
+  
+      setTimeout(endGame, 500); // 500ms 후 게임 종료
+    }
   }
-}
