@@ -6,7 +6,12 @@ let sequence = [];
 let userSequence = [];
 let timerInterval;
 
+let numbersequenceHighScore = 0; // 최고 점수 변수
+
 function initGame() {
+    // 최고 점수를 로드합니다.
+    loadHighScore();
+
     // 게임이 다시 시작될 때 기존의 메시지와 버튼을 제거합니다.
     const existingMessage = document.querySelector('.game-over-container');
     if (existingMessage) {
@@ -121,6 +126,9 @@ function showGameOverMessage(message) {
     const board = document.getElementById('game-board');
     board.innerHTML = '';  // 게임 보드를 비웁니다.
 
+    // 최고 점수를 업데이트합니다.
+    updateHighScore();
+
     // 안내 문구를 숨깁니다.
     const instruction = document.getElementById('game-instruction');
     if (instruction) {
@@ -173,6 +181,25 @@ function showGameOverMessage(message) {
     const header = document.querySelector('.header');
     header.insertAdjacentElement('afterend', container);
 }
+
+// 최고 점수 로드 함수
+function loadHighScore() {
+    const savedHighScore = localStorage.getItem("numbersequenceHighScore");
+    if (savedHighScore) {
+        numbersequenceHighScore = parseInt(savedHighScore, 10);
+    document.getElementById("high-score").textContent = `${numbersequenceHighScore}점`;
+    }
+}
+
+// 최고 점수 업데이트 함수
+function updateHighScore() {
+    if (score > numbersequenceHighScore) {
+        numbersequenceHighScore = score;
+    document.getElementById("high-score").textContent = `${numbersequenceHighScore}점`;
+    localStorage.setItem("numbersequenceHighScore", numbersequenceHighScore); // 로컬 저장소에 저장
+    }
+}    
+
 
 // Initialize the game when the page loads
 window.onload = initGame;
