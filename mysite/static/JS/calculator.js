@@ -2,6 +2,14 @@ let output = ''; // 계산 결과를 저장할 변수
 
 // 숫자 및 연산자 버튼 클릭 시 호출되는 함수
 function appendToOutput(value) {
+    // 기존 값에 소수점이 포함된 숫자와 새로운 소수점을 추가할 수 있는지 검사
+    const lastChar = output[output.length - 1];
+    
+    // 연산자나 괄호 뒤에 소수점을 추가할 수 없도록 하기 위해
+    if (value === '.' && (lastChar === '.' || ['+', '-', '*', '/', '%', '(', ')'].includes(lastChar))) {
+        return; // 소수점이 연산자 또는 괄호 뒤에 있으면 추가하지 않음
+    }
+    
     output += value; // 클릭한 버튼의 값이 결과에 추가됨
     updateOutputScreen(); // 결과를 화면에 출력
 }
@@ -9,16 +17,27 @@ function appendToOutput(value) {
 // 등호 버튼 클릭 시 호출되는 함수
 function calculate() {
     try {
-        // JavaScript의 eval 함수를 사용하여 결과 계산
-        output = eval(output);
+        // 쉼표 제거하고 % 연산자를 처리
+        let cleanOutput = output.replace(/,/g, '');
+        cleanOutput = processPercent(cleanOutput); // 퍼센트 연산 처리
+        output = eval(cleanOutput);
         // 결과를 소수점 2자리까지 반올림 후 문자열로 변환
         output = parseFloat(output.toFixed(2));
+        output = formatNumber(output); // 천 단위 쉼표 추가
         updateOutputScreen();
     } catch (error) {
         // 연산 오류 발생 시 에러 메시지 출력
         output = 'Error';
         updateOutputScreen();
     }
+}
+
+// 퍼센트 연산을 처리하는 함수
+function processPercent(expression) {
+    // %를 발견하고 해당 퍼센트 연산을 처리
+    return expression.replace(/(\d+(\.\d+)?)%/g, (match, p1) => {
+        return `(${p1} / 100)`;
+    });
 }
 
 // 화면 초기화 (C 버튼 클릭 시 호출)
@@ -29,13 +48,28 @@ function clearOutput() {
 
 // 백스페이스 (←) 버튼 클릭 시 호출되는 함수
 function backspace() {
-    output = output.slice(0, -1); // 결과의 마지막 문자 삭제
+    // 쉼표를 제거하고 마지막 문자 삭제
+    const cleanOutput = output.replace(/,/g, '');
+    output = cleanOutput.slice(0, -1);
+    output = formatNumberForInput(output);
     updateOutputScreen();
 }
 
 // 결과를 화면에 출력하는 함수
 function updateOutputScreen() {
     document.getElementById('output-screen').value = output;
+}
+
+// 천 단위로 쉼표 추가하는 함수
+function formatNumber(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+// 숫자 입력 시 천 단위 쉼표 추가
+function formatNumberForInput(number) {
+    const parts = number.split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return parts.join('.');
 }
 
 // 버튼 클릭 이벤트 설정
@@ -91,7 +125,7 @@ document.addEventListener("keydown", function(event) {
     }
 
     // 숫자나 연산자 키를 누르면 결과에 해당 키를 추가
-    if ((/\d/).test(key) || "+-*/%()".includes(key)) {
+    if ((/\d/).test(key) || "+-*/%()".includes(key) || key === '.') {
         appendToOutput(key);
     }
 });
@@ -108,11 +142,19 @@ document.getElementById("historyButton").addEventListener("click", () => {
     } else {
         calculations.forEach((calculation, index) => {
             const p = document.createElement("p");
-            const result = eval(calculation);
-            // 결과를 소수점 2자리까지 반올림
-            const roundedResult = parseFloat(result.toFixed(2));
-            p.textContent = `${index + 1}. ${calculation} = ${roundedResult}`; // 결과값 추가
-            historyContent.appendChild(p);
+            try {
+                const cleanCalculation = calculation.replace(/,/g, '');
+                const result = eval(processPercent(cleanCalculation)); // 퍼센트 연산 처리
+                // 결과를 소수점 2자리까지 반올림
+                const roundedResult = parseFloat(result.toFixed(2));
+                // 천 단위 쉼표 추가
+                const formattedResult = formatNumber(roundedResult);
+                p.textContent = `${index + 1}. ${calculation} = ${formattedResult}`; // 결과값 추가
+                historyContent.appendChild(p);
+            } catch (e) {
+                p.textContent = `${index + 1}. ${calculation} = Error`;
+                historyContent.appendChild(p);
+            }
         });
     }
     // 모달 열기
@@ -131,9 +173,12 @@ function calculate() {
     if (calculation !== "") {
         recordCalculation(calculation);
         try {
-            const result = eval(calculation); // 계산 수행
+            const cleanCalculation = calculation.replace(/,/g, '');
+            const result = eval(processPercent(cleanCalculation)); // 퍼센트 연산 처리
             // 결과를 소수점 2자리까지 반올림
-            outputScreen.value = parseFloat(result.toFixed(2));
+            const roundedResult = parseFloat(result.toFixed(2));
+            // 천 단위 쉼표 추가
+            outputScreen.value = formatNumber(roundedResult);
         } catch (e) {
             outputScreen.value = 'Error';
         }
