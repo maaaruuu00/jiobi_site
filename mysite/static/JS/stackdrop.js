@@ -270,25 +270,46 @@ function calculateScore(currentLeft, lastBlockLeft) {
 
 // 블럭이 실패 조건을 만족하는지 확인하는 함수
 function checkFailCondition(currentLeft, lastBlockLeft) {
-    const difference = Math.abs(currentLeft - lastBlockLeft);
-    const tolerance = 1; // 허용 범위 설정 (1px)
-  
-    if (Math.abs(difference - blockWidth) < tolerance) {
-      // 전혀 닿지 않았을 때: 수평으로 아래로 떨어지게 설정
-      fallingRectangle.style.transition = "top 1s ease-out"; // 수평으로 떨어지는 애니메이션
-      fallingRectangle.style.top = `${gameAreaHeight}px`; // 게임 화면 아래로 떨어지게 설정
-  
-      setTimeout(() => {
-        fallingRectangle.style.display = 'none'; // 블럭을 숨김
-        endGame(); // 게임 종료
-      }, 1000); // 1초 후에 실행
-  
-    } else if (difference > blockWidth / 2) {
-      // 블럭이 절반 이상 벗어났을 때: 회전하면서 떨어지게 설정
-      fallingRectangle.style.transition = "top 0.5s ease-out, transform 0.5s ease-out";
-      fallingRectangle.style.transform = currentLeft < lastBlockLeft ? "rotate(-45deg)" : "rotate(45deg)";
-      fallingRectangle.style.top = `${gameAreaHeight}px`; // 게임 화면 아래로 떨어지게 설정
-  
-      setTimeout(endGame, 500); // 500ms 후 게임 종료
-    }
+  const difference = Math.abs(currentLeft - lastBlockLeft);
+  const tolerance = 1; // 허용 범위 설정 (1px)
+
+  const currentRight = currentLeft + blockWidth; // 현재 블럭의 오른쪽 위치
+  const lastBlockRight = lastBlockLeft + blockWidth; // 마지막 블럭의 오른쪽 위치
+
+  let failedRectangle = fallingRectangle; // 실패한 블럭을 따로 저장
+
+  // 블럭이 전혀 겹치지 않을 때
+  if (currentRight < lastBlockLeft || currentLeft > lastBlockRight) {
+    // 즉시 쌓기 버튼 비활성화
+    dropButton.disabled = true;
+
+    // 전혀 닿지 않았을 때: 수평으로 아래로 떨어지게 설정
+    fallingRectangle.style.transition = "top 1s ease-out"; // 수평으로 떨어지는 애니메이션
+    fallingRectangle.style.top = `${gameAreaHeight}px`; // 게임 화면 아래로 떨어지게 설정
+
+    // 1초 후에 블럭이 서서히 사라지게 함
+    setTimeout(() => {
+      failedRectangle.style.transition = "top 2s ease-in-out, opacity 2s ease-in-out";
+      failedRectangle.style.top = `${gameAreaHeight + 100}px`; // 블럭이 천천히 아래로 내려감
+      failedRectangle.style.opacity = "0"; // 투명하게 변경
+    }, 0); // 블럭이 떨어지고 1초 후에 시작
+
+    // 상단 블럭이 완전히 사라지면 게임 종료
+    setTimeout(() => {
+      fallingRectangle.style.display = 'none'; // 블럭을 숨김
+      endGame(); // 게임 종료
+    }, 1000); // 1초 후에 실행
+
+  } else if (difference > blockWidth / 2) {
+    // 즉시 쌓기 버튼 비활성화
+    dropButton.disabled = true;
+
+    // 블럭이 절반 이상 벗어났을 때: 회전하면서 떨어지게 설정
+    fallingRectangle.style.transition = "top 0.5s ease-out, transform 0.5s ease-out";
+    fallingRectangle.style.transform = currentLeft < lastBlockLeft ? "rotate(-45deg)" : "rotate(45deg)";
+    fallingRectangle.style.top = `${gameAreaHeight}px`; // 게임 화면 아래로 떨어지게 설정
+
+    setTimeout(endGame, 500); // 500ms 후 게임 종료
   }
+}
+
