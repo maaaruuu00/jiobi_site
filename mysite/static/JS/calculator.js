@@ -57,8 +57,9 @@ function backspace() {
 
 // 결과를 화면에 출력하는 함수
 function updateOutputScreen() {
-    document.getElementById('output-screen').value = output;
+    document.getElementById('output-screen').value = formatNumberForInput(output);
 }
+
 
 // 천 단위로 쉼표 추가하는 함수
 function formatNumber(number) {
@@ -67,10 +68,11 @@ function formatNumber(number) {
 
 // 숫자 입력 시 천 단위 쉼표 추가
 function formatNumberForInput(number) {
-    const parts = number.split('.');
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    return parts.join('.');
+    const [integerPart, decimalPart] = number.replace(/,/g, '').split('.');
+    const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return decimalPart ? `${formattedIntegerPart}.${decimalPart}` : formattedIntegerPart;
 }
+
 
 // 버튼 클릭 이벤트 설정
 document.querySelectorAll('.button').forEach(button => {
@@ -196,4 +198,10 @@ document.addEventListener("click", function(event) {
     if (event.target === modal) {
         modal.style.display = "none";
     }
+});
+
+// 입력 필드의 input 이벤트 리스너 추가
+document.getElementById('output-screen').addEventListener('input', function() {
+    const value = this.value;
+    this.value = formatNumberForInput(value);
 });
