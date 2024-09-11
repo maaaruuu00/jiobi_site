@@ -41,9 +41,11 @@ body {
 
 .quarter-button {
   position: absolute;
-  border-radius: 100% 0 0 0;
+  border-radius: 100% 0 0 0;  /* 도넛 모양을 유지 */
   cursor: pointer;
   border: none;
+  background-size: cover;  /* 이미지 크기를 버튼 크기에 맞추기 */
+  background-repeat: no-repeat;  /* 이미지 반복 방지 */
 }
 
 .quarter-button:hover {
