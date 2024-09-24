@@ -1,24 +1,35 @@
 let output = ''; // 계산 결과를 저장할 변수
 
+// 계산 결과를 저장할 배열 추가
+let calculations = []; // 여기에 선언을 추가합니다.
+
 // 숫자 및 연산자 버튼 클릭 시 호출되는 함수
 function appendToOutput(value) {
-    // 기존 값에 소수점이 포함된 숫자와 새로운 소수점을 추가할 수 있는지 검사
     const lastChar = output[output.length - 1];
-    
-    // 연산자나 괄호 뒤에 소수점을 추가할 수 없도록 하기 위해
-    if (value === '.' && (lastChar === '.' || ['+', '-', '*', '/', '%', '(', ')'].includes(lastChar))) {
-        return; // 소수점이 연산자 또는 괄호 뒤에 있으면 추가하지 않음
+
+    // 소수점이 중복 입력되지 않도록 검사
+    if (value === '.') {
+        const lastNumber = output.split(/[+\-*/%]/).pop(); // 마지막 숫자만 추출
+        if (lastNumber.includes('.')) {
+            return; // 소수점이 이미 있으면 추가하지 않음
+        }
     }
-    
-    output += value; // 클릭한 버튼의 값이 결과에 추가됨
-    updateOutputScreen(); // 결과를 화면에 출력
+
+    // 연산자 뒤에 소수점 입력 금지
+    if (value === '.' && ['+', '-', '*', '/', '%', '(', ')'].includes(lastChar)) {
+        return;
+    }
+
+    output += value;
+    console.log("현재 입력값: ", output);  // 콘솔에 현재 입력된 값 출력
+    updateOutputScreen();
 }
 
 // 등호 버튼 클릭 시 호출되는 함수
 function calculate() {
     try {
         // 쉼표 제거하고 % 연산자를 처리
-        let cleanOutput = output.replace(/,/g, '');
+        let cleanOutput = output.replace(/,/g, ''); 
         cleanOutput = processPercent(cleanOutput); // 퍼센트 연산 처리
         output = eval(cleanOutput);
         // 결과를 소수점 2자리까지 반올림 후 문자열로 변환
@@ -51,15 +62,15 @@ function backspace() {
     // 쉼표를 제거하고 마지막 문자 삭제
     const cleanOutput = output.replace(/,/g, '');
     output = cleanOutput.slice(0, -1);
-    output = formatNumberForInput(output);
     updateOutputScreen();
 }
 
 // 결과를 화면에 출력하는 함수
 function updateOutputScreen() {
-    document.getElementById('output-screen').value = formatNumberForInput(output);
+    const formattedValue = formatNumberForInput(output); // 출력 포맷을 적용한 값
+    document.getElementById('output-screen').value = formattedValue;
+    console.log("현재 출력값:", formattedValue); // 콘솔에 현재 출력값 표시
 }
-
 
 // 천 단위로 쉼표 추가하는 함수
 function formatNumber(number) {
@@ -70,9 +81,10 @@ function formatNumber(number) {
 function formatNumberForInput(number) {
     const [integerPart, decimalPart] = number.replace(/,/g, '').split('.');
     const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // 소수점 이후 부분은 쉼표 없이 그대로 유지
     return decimalPart ? `${formattedIntegerPart}.${decimalPart}` : formattedIntegerPart;
 }
-
 
 // 버튼 클릭 이벤트 설정
 document.querySelectorAll('.button').forEach(button => {
@@ -90,20 +102,6 @@ document.querySelectorAll('.button').forEach(button => {
         }
     });
 });
-
-// 공학용 버튼 클릭 시 호출되는 함수
-function toggleAdvancedMode() {
-    advancedMode = !advancedMode; // 공학용 모드 상태 변경
-
-    if (advancedMode) {
-        // 공학용 모드가 활성화되면 공학용 버튼 텍스트를 '기본 모드'로 변경
-        document.querySelector('.advanced-button').textContent = '기본 모드';
-        // 추가적인 공학용 기능을 구현할 수 있음
-    } else {
-        // 공학용 모드가 비활성화되면 공학용 버튼 텍스트를 '공학용'으로 변경
-        document.querySelector('.advanced-button').textContent = '공학용';
-    }
-}
 
 // 키보드 이벤트 처리 함수
 document.addEventListener("keydown", function(event) {
@@ -131,9 +129,6 @@ document.addEventListener("keydown", function(event) {
         appendToOutput(key);
     }
 });
-
-// 계산 결과를 저장할 배열 추가
-let calculations = [];
 
 // 기록 버튼 클릭 시 저장된 계산 결과를 모달 창에 표시
 document.getElementById("historyButton").addEventListener("click", () => {
@@ -189,7 +184,7 @@ function calculate() {
 
 // 계산 결과를 기록하는 함수
 function recordCalculation(calculation) {
-    calculations.push(calculation);
+    calculations.push(calculation.replace(/,/g, '')); // 쉼표 제거 후 기록
 }
 
 // 기록 모달 창 관련 이벤트 리스너 추가
