@@ -7,9 +7,11 @@ let calculations = []; // 여기에 선언을 추가합니다.
 function appendToOutput(value) {
     const lastChar = output[output.length - 1];
 
+    // 연산자와 소수점 관련 문제 해결을 위해 마지막 숫자만 추출
+    const lastNumber = output.split(/[+\-*/%]/).pop(); // 마지막 숫자만 추출
+
     // 소수점이 중복 입력되지 않도록 검사
     if (value === '.') {
-        const lastNumber = output.split(/[+\-*/%]/).pop(); // 마지막 숫자만 추출
         if (lastNumber.includes('.')) {
             return; // 소수점이 이미 있으면 추가하지 않음
         }
@@ -21,7 +23,7 @@ function appendToOutput(value) {
     }
 
     output += value;
-    console.log("현재 입력값: ", output);  // 콘솔에 현재 입력된 값 출력
+    
     updateOutputScreen();
 }
 
@@ -31,10 +33,15 @@ function calculate() {
         // 쉼표 제거하고 % 연산자를 처리
         let cleanOutput = output.replace(/,/g, ''); 
         cleanOutput = processPercent(cleanOutput); // 퍼센트 연산 처리
-        output = eval(cleanOutput);
-        // 결과를 소수점 2자리까지 반올림 후 문자열로 변환
-        output = parseFloat(output.toFixed(2));
-        output = formatNumber(output); // 천 단위 쉼표 추가
+
+        // Big.js를 사용하여 연산을 정확히 수행
+        let result = Big(cleanOutput); // Big.js로 직접 연산 수행
+
+        // 소수점 이하 10자리까지 표시
+        output = result.toFixed(10); // 소수점 이하 10자리로 고정
+
+        // 천 단위 쉼표 추가, 소수점 이하 부분 유지
+        output = formatNumber(output); 
         updateOutputScreen();
     } catch (error) {
         // 연산 오류 발생 시 에러 메시지 출력
@@ -42,6 +49,7 @@ function calculate() {
         updateOutputScreen();
     }
 }
+
 
 // 퍼센트 연산을 처리하는 함수
 function processPercent(expression) {
@@ -69,7 +77,7 @@ function backspace() {
 function updateOutputScreen() {
     const formattedValue = formatNumberForInput(output); // 출력 포맷을 적용한 값
     document.getElementById('output-screen').value = formattedValue;
-    console.log("현재 출력값:", formattedValue); // 콘솔에 현재 출력값 표시
+    
 }
 
 // 천 단위로 쉼표 추가하는 함수
@@ -77,13 +85,14 @@ function formatNumber(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-// 숫자 입력 시 천 단위 쉼표 추가
-function formatNumberForInput(number) {
-    const [integerPart, decimalPart] = number.replace(/,/g, '').split('.');
-    const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-    // 소수점 이후 부분은 쉼표 없이 그대로 유지
-    return decimalPart ? `${formattedIntegerPart}.${decimalPart}` : formattedIntegerPart;
+// 숫자 입력 시 천 단위 쉼표 추가
+function formatNumberForInput(expression) {
+    // 숫자와 소수점에 대해 쉼표를 적용하기 위해 정규식 수정
+    return expression.replace(/(\d+)(\.\d+)?/g, (match, intPart, decimalPart) => {
+        const formattedIntPart = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return decimalPart ? `${formattedIntPart}${decimalPart}` : formattedIntPart;
+    });
 }
 
 // 버튼 클릭 이벤트 설정
