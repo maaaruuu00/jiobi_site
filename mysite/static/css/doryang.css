@@ -31,6 +31,8 @@ th, td {
     border: 1px solid black;
     padding: 8px;
     text-align: center;
+    word-wrap: break-word; /* 줄바꿈을 허용 */
+    white-space: normal; /* 줄바꿈을 가능하게 함 */
 }
 
 th {
@@ -60,12 +62,34 @@ button {
 /* New CSS for centering label text */
 label {
     display: inline-block;
-    width: 80px; /* 원하는 고정 길이 설정 */
+    width: 100%; /* 고정된 너비 대신 유연한 너비로 설정 */
     text-align: center;
-    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    white-space: normal; /* 모바일에서 줄바꿈 허용 */
 }
 
 td {
     text-align: center;
     vertical-align: middle; /* 세로 정렬도 중앙으로 */
+}
+
+/* 기본 설정: 웹에서 한 줄에 두 개씩 */
+.result-table table {
+    width: 100%;
+}
+
+.result-table td {
+    width: 25%; /* 4개의 칸을 균등하게 분배 */
+}
+
+/* 모바일에서는 한 줄에 하나씩 보이도록 설정 */
+@media (max-width: 768px) {
+    .result-table td {
+        width: 100%; /* 모바일에서는 각 항목이 한 줄에 하나씩 표시되도록 */
+        display: block; /* 블록 요소로 변경 */
+        text-align: left; /* 텍스트를 왼쪽 정렬 (원하는 경우) */
+    }
+
+    .result-table tr {
+        display: block; /* 행도 블록으로 변경 */
+    }
 }

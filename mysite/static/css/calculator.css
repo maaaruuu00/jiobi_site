@@ -130,3 +130,19 @@ body {
     text-decoration: none;
     cursor: pointer;
 }
+
+/* 등호(=) 버튼을 더 크게 만들기 위한 스타일 */
+.equals-big {
+    grid-column: span 2; /* 버튼이 가로로 2개의 칸을 차지하도록 */
+    font-size: 2rem; /* 글씨 크기를 크게 */
+    padding: 20px 0; /* 버튼 높이를 조정 */
+    background-color: #007bff; /* 배경색을 눈에 띄는 색으로 */
+    color: #fff; /* 글자 색을 흰색으로 */
+    border-radius: 10px; /* 버튼을 둥글게 */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.equals-big:hover {
+    background-color: #0056b3; /* 호버할 때 색상 변경 */
+}
