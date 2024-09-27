@@ -13,8 +13,10 @@
     <div class="form-group">
         <input type="text" id="lengthInput" value="0">
         <select id="lengthUnit">
+            <option value="mm">밀리미터(mm)</option>
             <option value="cm">센티미터(cm)</option>
             <option value="m">미터(m)</option>
+            <option value="km">킬로미터(km)</option>
             <option value="inch">인치(inch)</option>
             <option value="feet">피트(feet)</option>
             <option value="yard">야드(yard)</option>
@@ -30,10 +32,16 @@
     <div class="result-table">
         <table>
             <tr>
+                <td><label for="mm">밀리미터</label></td>
+                <td><input type="text" id="mm" readonly></td>
                 <td><label for="cm">센티미터</label></td>
                 <td><input type="text" id="cm" readonly></td>
+            </tr>
+            <tr></tr>
                 <td><label for="m">미터</label></td>
                 <td><input type="text" id="m" readonly></td>
+                <td><label for="km">킬로미터</label></td>
+                <td><input type="text" id="km" readonly></td>
             </tr>
             <tr>
                 <td><label for="inch">인치</label></td>
@@ -69,158 +77,204 @@
     </div>
 
     <h1>무게 변환</h1>
-    <div class="form-group">
-        <input type="text" id="weightInput" value="0">
-        <select id="weightUnit">
-            <option value="g">그램(g)</option>
-            <option value="kg">킬로그램(kg)</option>
-            <option value="ton">톤(ton)</option>
-            <option value="grain">그레인(grain)</option>
-            <option value="ounce">온스(ounce)</option>
-            <option value="pound">파운드(pound)</option>
-            <option value="don">돈</option>
-            <option value="gun">근</option>
-            <option value="guan">관</option>
-        </select>
-        <button id="weightConvertButton">변환</button>
-    </div>
-    <div class="result-table">
-        <table>
-            <tr>
-                <td><label for="g">그램</label></td>
-                <td><input type="text" id="g" readonly></td>
-                <td><label for="kg">킬로그램</label></td>
-                <td><input type="text" id="kg" readonly></td>
-            </tr>
-            <tr>
-                <td><label for="ton">톤</label></td>
-                <td><input type="text" id="ton" readonly></td>
-                <td><label for="grain">그레인</label></td>
-                <td><input type="text" id="grain" readonly></td>
-            </tr>
-            <tr>
-                <td><label for="ounce">온스</label></td>
-                <td><input type="text" id="ounce" readonly></td>
-                <td><label for="pound">파운드</label></td>
-                <td><input type="text" id="pound" readonly></td>
-            </tr>
-            <tr>
-                <td><label for="don">돈</label></td>
-                <td><input type="text" id="don" readonly></td>
-                <td><label for="gun">근</label></td>
-                <td><input type="text" id="gun" readonly></td>
-            </tr>
-            <tr>
-                <td><label for="guan">관</label></td>
-                <td><input type="text" id="guan" readonly></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
-    </div>
+<div class="form-group">
+    <input type="text" id="weightInput" value="0">
+    <select id="weightUnit">
+        <option value="mg">밀리그램(mg)</option>
+        <option value="g">그램(g)</option>
+        <option value="kg">킬로그램(kg)</option>
+        <option value="ton">톤(ton)</option>
+        <option value="grain">그레인(grain)</option>
+        <option value="ounce">온스(ounce)</option>
+        <option value="pound">파운드(pound)</option>
+        <option value="stone">스톤(stone)</option>
+        <option value="don">돈</option>
+        <option value="nyang">냥</option>
+        <option value="gun">근</option>
+        <option value="guan">관</option>
+    </select>
+    <button id="weightConvertButton">변환</button>
+</div>
 
-    <h1>넓이 변환</h1>
-    <div class="form-group">
-        <input type="text" id="areaInput" value="0">
-        <select id="areaUnit">
-            <option value="pyong">평방자</option>
-            <option value="py">평</option>
-            <option value="danbo">단보</option>
-            <option value="jeongbo">정보</option>
-            <option value="sqm">평방미터</option>
-            <option value="are">아르</option>
-            <option value="sqft">평방피트</option>
-            <option value="sqyd">평방야드</option>
-            <option value="acre">에이커</option>
-        </select>
-        <button id="areaConvertButton">변환</button>
-    </div>
-    <div class="result-table">
-        <table>
-            <tr>
-                <td><label for="pyong">평방자</label></td>
-                <td><input type="text" id="pyong" readonly></td>
-                <td><label for="py">평</label></td>
-                <td><input type="text" id="py" readonly></td>
-            </tr>
-            <tr>
-                <td><label for="danbo">단보</label></td>
-                <td><input type="text" id="danbo" readonly></td>
-                <td><label for="jeongbo">정보</label></td>
-                <td><input type="text" id="jeongbo" readonly></td>
-            </tr>
-            <tr>
-                <td><label for="sqm">평방미터</label></td>
-                <td><input type="text" id="sqm" readonly></td>
-                <td><label for="are">아르</label></td>
-                <td><input type="text" id="are" readonly></td>
-            </tr>
-            <tr>
-                <td><label for="sqft">평방피트</label></td>
-                <td><input type="text" id="sqft" readonly></td>
-                <td><label for="sqyd">평방야드</label></td>
-                <td><input type="text" id="sqyd" readonly></td>
-            </tr>
-            <tr>
-                <td><label for="acre">에이커</label></td>
-                <td><input type="text" id="acre" readonly></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
-    </div>
+<div class="result-table">
+    <table>
+        <tr>
+            <td><label for="mg">밀리그램</label></td>
+            <td><input type="text" id="mg" readonly></td>
+            <td><label for="g">그램</label></td>
+            <td><input type="text" id="g" readonly></td>
+        </tr>
+        <tr>
+            <td><label for="kg">킬로그램</label></td>
+            <td><input type="text" id="kg" readonly></td>
+            <td><label for="ton">톤</label></td>
+            <td><input type="text" id="ton" readonly></td>
+        </tr>
+        <tr>
+            <td><label for="grain">그레인</label></td>
+            <td><input type="text" id="grain" readonly></td>
+            <td><label for="ounce">온스</label></td>
+            <td><input type="text" id="ounce" readonly></td>
+        </tr>
+        <tr>
+            <td><label for="pound">파운드</label></td>
+            <td><input type="text" id="pound" readonly></td>
+            <td><label for="stone">스톤</label></td>
+            <td><input type="text" id="stone" readonly></td>
+        </tr>
+        <tr>
+            <td><label for="don">돈</label></td>
+            <td><input type="text" id="don" readonly></td>
+            <td><label for="nyang">냥</label></td>
+            <td><input type="text" id="nyang" readonly></td>
+        </tr>
+        <tr>
+            <td><label for="gun">근</label></td>
+            <td><input type="text" id="gun" readonly></td>
+            <td><label for="guan">관</label></td>
+            <td><input type="text" id="guan" readonly></td>
+        </tr>
+    </table>
+</div>
 
-    <h1>부피 변환</h1>
-    <div class="form-group">
-        <input type="text" id="volumeInput" value="0">
-        <select id="volumeUnit">
-            <option value="hob">홉</option>
-            <option value="doe">되</option>
-            <option value="mal">말</option>
-            <option value="ccm">입방센치</option>
-            <option value="cbm">입방미터</option>
-            <option value="liter">리터</option>
-            <option value="cubicInch">입방인치</option>
-            <option value="cubicFeet">입방피트</option>
-            <option value="cubicYard">입방야드</option>
-            <option value="gallon">갤론</option>
-        </select>
-        <button id="volumeConvertButton">변환</button>
-    </div>
-    <div class="result-table">
-        <table>
-            <tr>
-                <td><label for="hob">홉</label></td>
-                <td><input type="text" id="hob" readonly></td>
-                <td><label for="doe">되</label></td>
-                <td><input type="text" id="doe" readonly></td>
-            </tr>
-            <tr>
-                <td><label for="mal">말</label></td>
-                <td><input type="text" id="mal" readonly></td>
-                <td><label for="ccm">입방센치</label></td>
-                <td><input type="text" id="ccm" readonly></td>
-            </tr>
-            <tr>
-                <td><label for="cbm">입방미터</label></td>
-                <td><input type="text" id="cbm" readonly></td>
-                <td><label for="liter">리터</label></td>
-                <td><input type="text" id="liter" readonly></td>
-            </tr>
-            <tr>
-                <td><label for="cubicInch">입방인치</label></td>
-                <td><input type="text" id="cubicInch" readonly></td>
-                <td><label for="cubicFeet">입방피트</label></td>
-                <td><input type="text" id="cubicFeet" readonly></td>
-            </tr>
-            <tr>
-                <td><label for="cubicYard">입방야드</label></td>
-                <td><input type="text" id="cubicYard" readonly></td>
-                <td><label for="gallon">갤론</label></td>
-                <td><input type="text" id="gallon" readonly></td>
-            </tr>
-        </table>
-    </div>
+
+<h1>넓이 변환</h1>
+<div class="form-group">
+    <input type="text" id="areaInput" value="0">
+    <select id="areaUnit">
+        <option value="sqmm">제곱밀리미터(㎟)</option>
+        <option value="sqcm">제곱센티미터(㎠)</option>
+        <option value="sqm">제곱미터(㎡)</option>
+        <option value="are">아르(are)</option>
+        <option value="sqkm">제곱킬로미터(㎢)</option>
+        <option value="pyong">평방자(평방尺)</option>
+        <option value="py">평(坪)</option>
+        <option value="danbo">단보(段步)</option>
+        <option value="jeongbo">정보(町步)</option>
+        <option value="sqft">평방피트(ft²)</option>
+        <option value="sqyd">평방야드(yd²)</option>
+        <option value="acre">에이커(ac)</option>
+    </select>
+    <button id="areaConvertButton">변환</button>
+</div>
+<div class="result-table">
+    <table>
+        <tr>
+            <td><label for="sqmm">제곱밀리미터</label></td>
+            <td><input type="text" id="sqmm" readonly></td>
+            <td><label for="sqcm">제곱센티미터</label></td>
+            <td><input type="text" id="sqcm" readonly></td>
+        </tr>
+        <tr>
+            <td><label for="sqm">제곱미터</label></td>
+            <td><input type="text" id="sqm" readonly></td>
+            <td><label for="are">아르</label></td>
+            <td><input type="text" id="are" readonly></td>
+        </tr>
+        <tr>
+            <td><label for="sqkm">제곱킬로미터</label></td>
+            <td><input type="text" id="sqkm" readonly></td>
+            <td><label for="pyong">평방자</label></td>
+            <td><input type="text" id="pyong" readonly></td>
+        </tr>
+        <tr>
+            <td><label for="py">평</label></td>
+            <td><input type="text" id="py" readonly></td>
+            <td><label for="danbo">단보</label></td>
+            <td><input type="text" id="danbo" readonly></td>
+        </tr>
+        <tr>
+            <td><label for="jeongbo">정보</label></td>
+            <td><input type="text" id="jeongbo" readonly></td>
+            <td><label for="sqft">평방피트</label></td>
+            <td><input type="text" id="sqft" readonly></td>
+        </tr>
+        <tr>
+            <td><label for="sqyd">평방야드</label></td>
+            <td><input type="text" id="sqyd" readonly></td>
+            <td><label for="acre">에이커</label></td>
+            <td><input type="text" id="acre" readonly></td>
+        </tr>
+    </table>
+</div>
+
+
+<h1>부피 변환</h1>
+<div class="form-group">
+    <input type="text" id="volumeInput" value="0">
+    <select id="volumeUnit">
+        <option value="ccmm">세제곱밀리미터(㎣)</option> <!-- 세제곱밀리미터 추가 -->
+        <option value="ccm">세제곱센티미터(㎤)</option>
+        <option value="cbm">세제곱미터(㎥)</option>
+        <option value="ml">밀리리터(mL)</option>
+        <option value="liter">리터(L)</option>
+        <option value="cubicInch">세제곱인치(in³)</option>
+        <option value="cubicFeet">세제곱피트(ft³)</option>
+        <option value="cubicYard">세제곱야드(yd³)</option>
+        <option value="hob">홉</option>
+        <option value="doe">되</option>
+        <option value="mal">말</option>
+        <option value="gallon">갤런(gal)</option>
+        <option value="quart">쿼트(quart)</option>
+        <option value="pint">파인트(pint)</option>
+        <option value="fl_oz">액량온스(fl oz)</option>
+        <option value="barrel">배럴(bbl)</option>
+    </select>
+    <button id="volumeConvertButton">변환</button>
+</div>
+<div class="result-table">
+    <table>
+        <tr>
+            <td><label for="ccmm">세제곱밀리미터(㎣)</label></td> 
+            <td><input type="text" id="ccmm" readonly></td>
+            <td><label for="ccm">세제곱센티미터(㎤)</label></td>
+            <td><input type="text" id="ccm" readonly></td>
+        </tr>
+        <tr>
+            <td><label for="cbm">세제곱미터(㎥)</label></td>
+            <td><input type="text" id="cbm" readonly></td>
+            <td><label for="ml">밀리리터(mL)</label></td>
+            <td><input type="text" id="ml" readonly></td>
+        </tr>
+        <tr>
+            <td><label for="liter">리터(L)</label></td>
+            <td><input type="text" id="liter" readonly></td>
+            <td><label for="cubicInch">세제곱인치(in³)</label></td>
+            <td><input type="text" id="cubicInch" readonly></td>
+        </tr>
+        <tr>
+            <td><label for="cubicFeet">세제곱피트(ft³)</label></td>
+            <td><input type="text" id="cubicFeet" readonly></td>
+            <td><label for="cubicYard">세제곱야드(yd³)</label></td>
+            <td><input type="text" id="cubicYard" readonly></td>
+        </tr>
+        <tr>
+            <td><label for="hob">홉</label></td>
+            <td><input type="text" id="hob" readonly></td>
+            <td><label for="doe">되</label></td>
+            <td><input type="text" id="doe" readonly></td>
+        </tr>
+        <tr>
+            <td><label for="mal">말</label></td>
+            <td><input type="text" id="mal" readonly></td>
+            <td><label for="gallon">갤런(gal)</label></td>
+            <td><input type="text" id="gallon" readonly></td>
+        </tr>
+        <tr>
+            <td><label for="quart">쿼트(quart)</label></td>
+            <td><input type="text" id="quart" readonly></td>
+            <td><label for="pint">파인트(pint)</label></td>
+            <td><input type="text" id="pint" readonly></td>
+        </tr>
+        <tr>
+            <td><label for="fl_oz">액량온스(fl oz)</label></td>
+            <td><input type="text" id="fl_oz" readonly></td>
+            <td><label for="barrel">배럴(bbl)</label></td>
+            <td><input type="text" id="barrel" readonly></td>
+        </tr>
+    </table>
+</div>
+
 </div>
 {% endblock %}
 
