@@ -46,81 +46,123 @@ const toggleButton = document.getElementById('toggleClockFormat');
 toggleButton.addEventListener('click', toggleClockFormat);
 
 
+
+
+
 // clock.js_stopwatch
 document.addEventListener("DOMContentLoaded", () => {
-const stopwatch = document.getElementById("stopwatch");
-const millisecondsDisplay = document.getElementById("milliseconds");
-const startStopButton = document.getElementById("startStopButton");
-const lapButton = document.getElementById("lapButton");
-const resetButton = document.getElementById("resetButton");
-const lapList = document.getElementById("lapList");
+    let stopwatchCount = 1;
 
-let timer;
-let isRunning = false;
-let startTime;
-let elapsedTime = 0;
-let lapCount = 1;
+    // 각 스톱워치를 초기화하는 함수
+    function initializeStopwatch(stopwatchElement) {
+        const stopwatchDisplay = stopwatchElement.querySelector('.stopwatch-display');
+        const millisecondsDisplay = stopwatchElement.querySelector('.milliseconds-display');
+        const startStopButton = stopwatchElement.querySelector('.startStopButton');
+        const lapButton = stopwatchElement.querySelector('.lapButton');
+        const resetButton = stopwatchElement.querySelector('.resetButton');
+        const lapList = stopwatchElement.querySelector('.lapList');
+        const removeStopwatchButton = stopwatchElement.querySelector('.removeStopwatchButton'); // 제거 버튼
 
-function startStop() {
-if (isRunning) {
-clearInterval(timer);
-startStopButton.textContent = "시작";
-} else {
-startTime = Date.now() - elapsedTime;
-timer = setInterval(updateStopwatch, 10);
-startStopButton.textContent = "정지";
-}
-isRunning = !isRunning;
-}
+        let timer;
+        let isRunning = false;
+        let startTime;
+        let elapsedTime = 0;
+        let lapCount = 1;
 
-function lap() {
-if (isRunning) {
-const lapTime = Date.now() - startTime;
-const formattedLapTime = formatTime(lapTime);
-const listItem = document.createElement("li");
-listItem.className = "list-group-item";
-listItem.textContent = `랩 ${lapCount}: ${formattedLapTime}`;
-lapList.appendChild(listItem);
-lapCount++;
-}
-}
+        function startStop() {
+            if (isRunning) {
+                clearInterval(timer);
+                startStopButton.textContent = "시작";
+            } else {
+                startTime = Date.now() - elapsedTime;
+                timer = setInterval(updateStopwatch, 10);
+                startStopButton.textContent = "정지";
+            }
+            isRunning = !isRunning;
+        }
 
-function reset() {
-clearInterval(timer);
-elapsedTime = 0;
-lapCount = 1;
-lapList.innerHTML = "";
-updateDisplay(0);
-startStopButton.textContent = "시작";
-isRunning = false;
-}
+        function lap() {
+            if (isRunning) {
+                const lapTime = Date.now() - startTime;
+                const formattedLapTime = formatTime(lapTime);
+                const listItem = document.createElement("li");
+                listItem.className = "list-group-item";
+                listItem.textContent = `랩 ${lapCount}: ${formattedLapTime}`;
+                lapList.appendChild(listItem);
+                lapCount++;
+            }
+        }
 
-function updateStopwatch() {
-const currentTime = Date.now();
-elapsedTime = currentTime - startTime;
-updateDisplay(elapsedTime);
-}
+        function reset() {
+            clearInterval(timer);
+            elapsedTime = 0;
+            lapCount = 1;
+            lapList.innerHTML = "";
+            updateDisplay(0);
+            startStopButton.textContent = "시작";
+            isRunning = false;
+        }
 
-function updateDisplay(time) {
-const formattedTime = formatTime(time);
-stopwatch.textContent = formattedTime;
-const milliseconds = (time % 1000).toString().padStart(3, "0");
-millisecondsDisplay.textContent = `.${milliseconds}`;
-}
+        function updateStopwatch() {
+            const currentTime = Date.now();
+            elapsedTime = currentTime - startTime;
+            updateDisplay(elapsedTime);
+        }
 
-function formatTime(time) {
-const milliseconds = (time % 1000).toString().padStart(3, "0");
-const seconds = Math.floor((time / 1000) % 60).toString().padStart(2, "0");
-const minutes = Math.floor((time / (1000 * 60)) % 60).toString().padStart(2, "0");
-const hours = Math.floor(time / (1000 * 60 * 60)).toString().padStart(2, "0");
-return `${hours}:${minutes}:${seconds}`;
-}
+        function updateDisplay(time) {
+            const formattedTime = formatTime(time);
+            stopwatchDisplay.textContent = formattedTime;
+            const milliseconds = (time % 1000).toString().padStart(3, "0");
+            millisecondsDisplay.textContent = `.${milliseconds}`;
+        }
 
-startStopButton.addEventListener("click", startStop);
-lapButton.addEventListener("click", lap);
-resetButton.addEventListener("click", reset);
+        function formatTime(time) {
+            const milliseconds = (time % 1000).toString().padStart(3, "0");
+            const seconds = Math.floor((time / 1000) % 60).toString().padStart(2, "0");
+            const minutes = Math.floor((time / (1000 * 60)) % 60).toString().padStart(2, "0");
+            const hours = Math.floor(time / (1000 * 60 * 60)).toString().padStart(2, "0");
+            return `${hours}:${minutes}:${seconds}`;
+        }
+
+        // 제거 버튼 클릭 시 해당 스톱워치를 삭제
+        removeStopwatchButton.addEventListener("click", () => {
+            stopwatchElement.remove();
+        });
+
+        startStopButton.addEventListener("click", startStop);
+        lapButton.addEventListener("click", lap);
+        resetButton.addEventListener("click", reset);
+    }
+
+    // 초기 스톱워치에 대한 초기화
+    const initialStopwatch = document.querySelector('.stopwatch-card');
+    initializeStopwatch(initialStopwatch);
+
+    // 새로운 스톱워치를 추가하는 함수
+    const addStopwatchButton = document.getElementById("addStopwatchButton");
+    addStopwatchButton.addEventListener("click", () => {
+        stopwatchCount++;
+        const stopwatchContainer = document.getElementById("stopwatch-container");
+
+        // 새로운 스톱워치 요소 생성
+        const newStopwatch = document.createElement("div");
+        newStopwatch.classList.add("card", "text-center", "stopwatch-card");
+        newStopwatch.innerHTML = `
+            <div class="card-body">
+                <button class="btn btn-outline-danger removeStopwatchButton" style="position: absolute; top: 10px; right: 10px;">제거</button>
+                <div class="display-1 stopwatch-display">00:00:00</div>
+                <div class="display-4 milliseconds-display">.000</div>
+                <div class="mt-4">
+                    <button class="btn btn-primary startStopButton">시작</button>
+                    <button class="btn btn-info lapButton">랩</button>
+                    <button class="btn btn-danger resetButton">리셋</button>
+                </div>
+                <ul class="list-group mt-4 lapList"></ul>
+            </div>
+        `;
+
+        // 새로운 스톱워치 추가 및 초기화
+        stopwatchContainer.appendChild(newStopwatch);
+        initializeStopwatch(newStopwatch);
+    });
 });
-
-
-
-

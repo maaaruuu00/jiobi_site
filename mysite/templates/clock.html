@@ -49,21 +49,28 @@
         </div>
 
         <div class="tab-pane fade" id="stopwatch-tab" role="tabpanel" aria-labelledby="stopwatch-tab-tab">
-            <!-- 스톱워치 내용 -->
-            <div class="card text-center">
-                <div class="card-body">
-                    <div id="stopwatch" class="display-1">00:00:00</div>
-                    <div id="milliseconds" class="display-4">.000</div>
-                    <div class="mt-4">
-                        <button id="startStopButton" class="btn btn-primary">시작</button>
-                        <button id="lapButton" class="btn btn-info">랩</button>
-                        <button id="resetButton" class="btn btn-danger">리셋</button>
+            <!-- 스톱워치 목록 -->
+            <div id="stopwatch-container">
+                <!-- 초기 스톱워치 -->
+                <div class="card text-center stopwatch-card">
+                    <div class="card-body">
+                        <button class="btn btn-outline-danger removeStopwatchButton" style="position: absolute; top: 10px; right: 10px;">제거</button>
+                        <div class="display-1 stopwatch-display">00:00:00</div>
+                        <div class="display-4 milliseconds-display">.000</div>
+                        <div class="mt-4">
+                            <button class="btn btn-primary startStopButton">시작</button>
+                            <button class="btn btn-info lapButton">랩</button>
+                            <button class="btn btn-danger resetButton">리셋</button>
+                        </div>
+                        <ul class="list-group mt-4 lapList"></ul>
                     </div>
-                    <ul id="lapList" class="list-group mt-4"></ul>
                 </div>
             </div>
+            <!-- 스톱워치 추가 버튼 -->
+            <button id="addStopwatchButton" class="btn btn-success mt-4">스톱워치 추가</button>
             <script src="{% static 'JS/clock.js' %}"></script>
         </div>
+        
 
         <div class="tab-pane fade" id="timer-tab" role="tabpanel" aria-labelledby="timer-tab-tab">
             <!-- 타이머 내용 -->
