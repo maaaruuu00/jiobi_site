@@ -1,5 +1,8 @@
-*.pyc
-__pycache__/
-
-# Ignore Python virtual environment directory
 myenv/
+__pycache__/
+*.pyc
+*.pyo
+*.log
+db.sqlite3
+.env
+.vscode/
