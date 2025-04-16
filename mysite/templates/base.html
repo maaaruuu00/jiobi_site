@@ -30,6 +30,12 @@
                             <a class="navbar-brand" href="{% url 'main' %}">홈페이지</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{% url 'stt' %}">음성 텍스트 변환</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'tts' %}">텍스트 음성 변환</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'clock' %}">시계</a>
                         </li>
                         <li class="nav-item">
@@ -66,7 +72,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'blog' %}">블로그</a>
                         </li>
+                        
                     </ul>
+                    <p class="mt-auto text-muted" style="font-size: 0.9em;">문의 및 요청: maaaruuu7407@gmail.com</p>
                 </div>
             </nav>
             <!-- 메인 컨텐츠 -->
@@ -91,7 +99,6 @@
                         </div>
                     </div>
                 </div>
-                <p>문의 및 요청 : maaaruuu7407@gmail.com</p>
             </main>
         </div>
     </div>

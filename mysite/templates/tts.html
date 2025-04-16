@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>텍스트 → 음성 변환</title>
+    <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+    </script>
+</head>
+<body>
+    <h2>텍스트를 음성으로 변환</h2>
+    <form id="ttsForm">
+        <textarea name="text" rows="5" cols="40" placeholder="여기에 한국어 텍스트를 입력하세요"></textarea><br>
+        <button type="submit">음성 생성</button>
+    </form>
+    <hr>
+    <audio id="audioPlayer" controls style="display:none;"></audio>
+
+    <script>
+        document.getElementById('ttsForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            const response = await fetch('', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+                body: formData
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                const player = document.getElementById('audioPlayer');
+                player.src = result.audio_url;
+                player.style.display = 'block';
+                player.play();
+            } else {
+                alert(result.error || "오류 발생");
+            }
+        });
+    </script>
+</body>
+</html>

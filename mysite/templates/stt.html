@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}음성-텍스트 변환{% endblock %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="{% static 'css/stt.css' %}">
+{% endblock %}
+
+{% block content %}
+<main role="main">
+    <div class="stt-container py-5">
+        <h1 class="text-center mb-4">음성-텍스트 변환</h1>
+        <div class="card">
+            <div class="card-body">
+                <form id="stt-form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="audio" class="form-label">오디오 파일 업로드</label>
+                        <input type="file" class="form-control" id="audio" name="audio" accept="audio/*" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">변환하기</button>
+                </form>
+                <div id="progress-container">
+                    <p>변환 중입니다...</p>
+                    <div class="progress">
+                        <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="result-container" class="result-card" style="display: none;">
+            <h3 class="mb-3">변환 결과</h3>
+            <ul id="result-list" class="result-list"></ul>
+            <a id="download-link" href="#" class="btn btn-success mt-3" download>결과 다운로드 (.txt)</a>
+        </div>
+        
+        <div class="stt-info">
+            <h3>STT 사용 안내</h3>
+            <ul>
+                <li><strong>사용 방법:</strong> MP3, WAV 등 오디오 파일을 업로드하면 한국어(KO) 텍스트로 변환됩니다.</li>
+                <li><strong>지원 형식:</strong> 대부분의 오디오 파일 형식 지원 (MP3, WAV 권장).</li>
+                <li><strong>주의:</strong> 파일 크기가 크거나 오디오가 길면 변환 시간이 더 오래 걸릴 수 있습니다.</li>
+                <li><strong>정확도:</strong> 음질과 발음에 따라 결과가 달라질 수 있으며, Whisper Large 모델을 사용합니다.</li>
+            </ul>
+            <p class="license-notice">이 서비스는 오디오 파일을 텍스트로 변환하며, OpenAI의 Whisper를 MIT 라이선스 하에 사용합니다 (Copyright © 2022 OpenAI).</p>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+
+{% block javascript %}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById('stt-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const form = this;
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const resultContainer = document.getElementById('result-container');
+        const resultList = document.getElementById('result-list');
+        const downloadLink = document.getElementById('download-link');
+
+        // 초기화
+        progressContainer.style.display = 'block';
+        resultContainer.style.display = 'none';
+        resultList.innerHTML = '';
+        let progress = 0;
+
+        const formData = new FormData(form);
+
+        try {
+            // 1. 오디오 길이 가져오기
+            const durationResponse = await fetch("{% url 'get_audio_duration' %}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            });
+            if (!durationResponse.ok) throw new Error('서버 오류: ' + durationResponse.status);
+            const durationData = await durationResponse.json();
+            if (durationData.error) throw new Error(durationData.error);
+
+            const duration = durationData.duration * 1000; // 초를 밀리초로
+            const increment = 99 / (duration / 1000); // 99%까지 증가율
+
+            // 진행률 시작
+            const interval = setInterval(() => {
+                if (progress < 99) {
+                    progress += increment;
+                    if (progress > 99) progress = 99; // 99% 초과 방지
+                    progressBar.style.width = `${progress}%`;
+                    progressBar.textContent = `${Math.round(progress)}%`;
+                    progressBar.setAttribute('aria-valuenow', Math.round(progress));
+                }
+            }, 1000);
+
+            // 2. 변환 요청
+            const sttResponse = await fetch("{% url 'stt' %}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            });
+            if (!sttResponse.ok) throw new Error('서버 오류: ' + sttResponse.status);
+            const sttData = await sttResponse.json();
+            if (sttData.error) throw new Error(sttData.error);
+
+            // 변환 완료 시 100%
+            clearInterval(interval);
+            progress = 100;
+            progressBar.style.width = `${progress}%`;
+            progressBar.textContent = `${progress}%`;
+            progressBar.setAttribute('aria-valuenow', progress);
+
+            setTimeout(() => {
+                progressContainer.style.display = 'none';
+                resultContainer.style.display = 'block';
+                sttData.segments.forEach(segment => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="timestamp">${segment.timestamp}</span><span>${segment.text}</span>`;
+                    resultList.appendChild(li);
+                });
+                // 다운로드 링크 설정
+                downloadLink.href = "{% url 'download_txt' 'filename' %}".replace('filename', sttData.txt_file);
+            }, 500);
+        } catch (error) {
+            clearInterval(interval);
+            progressContainer.style.display = 'none';
+            alert('변환 중 오류가 발생했습니다: ' + error.message);
+        }
+    });
+</script>
+{% endblock %}

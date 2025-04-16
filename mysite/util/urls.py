@@ -20,4 +20,9 @@ urlpatterns = [
     path('doryang', views.doryang, name='doryang'),
 
     path('game', views.game, name='game'),
+    path('stt/', views.stt, name='stt'),
+    path('get_audio_duration/', views.get_audio_duration, name='get_audio_duration'),  # 추가
+    path('download_txt/<str:filename>', views.download_txt, name='download_txt'),  # 추가
+    path('tts/', views.tts, name='tts'),
+
 ]
