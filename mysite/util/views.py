@@ -18,9 +18,8 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"사용 중인 장치: {device}")
 
 # Whisper 모델 로드 함수 (필요 시 로드 및 해제)
-def load_whisper_model():
-    model = whisper.load_model("large-v3", device=device)
-    return model
+# Whisper 모델을 전역으로 로드 (서버 시작 시 한 번만 실행)
+model = whisper.load_model("large-v3")
 
 load_dotenv()  # .env 파일 로드
 # Pyannote-Audio 모델 로드 함수 (필요 시 로드 및 해제)
@@ -103,7 +102,7 @@ def get_audio_duration(request):
                 os.remove(file_path)
     return JsonResponse({'error': '잘못된 요청입니다.'}, status=400)
 
-# STT 변환 (GPU 사용, 메모리 최적화)
+# STT 변환
 def stt(request):
     if request.method == 'POST' and 'audio' in request.FILES:
         audio_file = request.FILES['audio']
@@ -116,57 +115,20 @@ def stt(request):
                 f.write(audio_file.read())
             if os.path.getsize(file_path) == 0:
                 return JsonResponse({'error': '업로드된 오디오 파일이 비어 있습니다.'}, status=400)
-
-            # GPU 메모리 캐시 정리
-            torch.cuda.empty_cache()
-
-            # Whisper로 초기 변환 (GPU 사용, FP16 및 배치 크기 조정)
-            whisper_model = load_whisper_model()
-            result = whisper_model.transcribe(file_path, language="ko", fp16=True, batch_size=8)
-            segments = result["segments"]
-            del whisper_model  # Whisper 모델 메모리 해제
-            torch.cuda.empty_cache()
-
-            # Pyannote-Audio로 화자 구분 (GPU 사용)
-            diarize_model = load_diarize_model()
-            diarization = diarize_model(file_path, num_speakers=2)
-            del diarize_model  # Pyannote-Audio 모델 메모리 해제
-            torch.cuda.empty_cache()
-
-            # Whisper segments와 화자 구분 매핑
-            formatted_segments = []
-            for segment in segments:
-                start = segment["start"]
-                end = segment["end"]
-                text = segment["text"]
-                mid_point = (start + end) / 2  # 발화 구간의 중간 지점
-
-                # 가장 가까운 화자 구간 찾기
-                speaker = "알 수 없음"
-                min_distance = float("inf")
-                for turn, _, speaker_id in diarization.itertracks(yield_label=True):
-                    turn_mid = (turn.start + turn.end) / 2
-                    distance = abs(turn_mid - mid_point)
-                    if distance < min_distance:
-                        min_distance = distance
-                        speaker = f"SPEAKER_{speaker_id}"
-                    if (turn.start <= start <= turn.end) or (turn.start <= end <= turn.end) or (start <= turn.start <= end):
-                        speaker = f"SPEAKER_{speaker_id}"
-                        break
-
-                formatted_segment = {
-                    'speaker': speaker,
-                    'timestamp': f"[{format_timestamp(start)} - {format_timestamp(end)}]",
-                    'text': text
+            result = model.transcribe(file_path, language="ko")
+            segments = [
+                {
+                    'timestamp': f"[{format_timestamp(segment['start'])} - {format_timestamp(segment['end'])}]",
+                    'text': segment['text']
                 }
-                formatted_segments.append(formatted_segment)
-
+                for segment in result["segments"]
+            ]
             # .txt 파일로 저장
             os.makedirs(os.path.dirname(txt_path), exist_ok=True)
             with open(txt_path, "w", encoding="utf-8") as txt_file:
-                for segment in formatted_segments:
-                    txt_file.write(f"{segment['speaker']} {segment['timestamp']} {segment['text']}\n")
-            return JsonResponse({'segments': formatted_segments, 'txt_file': txt_filename})  # 파일명만 반환
+                for segment in segments:
+                    txt_file.write(f"{segment['timestamp']} {segment['text']}\n")
+            return JsonResponse({'segments': segments, 'txt_file': txt_filename})  # 파일명만 반환
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
         finally:
